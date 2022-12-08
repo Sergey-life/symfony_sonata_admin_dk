@@ -39,6 +39,7 @@ class PostAdmin extends AbstractAdmin
         $filter->add('active');
         $filter->add('published');
         $filter->add('category');
+        $filter->add('image');
     }
 
     protected function configureListFields(ListMapper $list): void
@@ -48,6 +49,7 @@ class PostAdmin extends AbstractAdmin
         $list->addIdentifier('active');
         $list->addIdentifier('published');
         $list->addIdentifier('category');
+        $list->addIdentifier('image');
     }
 
     protected function configureShowFields(ShowMapper $show): void
@@ -57,6 +59,7 @@ class PostAdmin extends AbstractAdmin
         $show->add('active');
         $show->add('published');
         $show->add('category');
+        $show->add('image');
     }
 
     public function prePersist(object $image): void
