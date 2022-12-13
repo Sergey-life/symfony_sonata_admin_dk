@@ -3,12 +3,14 @@
 namespace App\Admin;
 
 use App\Entity\Category;
+use App\Entity\Post;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,47 +21,74 @@ class PostAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('title', TextType::class)
-            ->add('body', TextareaType::class)
-            ->add('active', CheckboxType::class)
-            ->add('published', CheckboxType::class)
-            ->add('category', ModelType::class, [
-                'class' => Category::class,
-                'property' => 'name'
-        ])
-            ->add('image', FileType::class, [
-                'required' => false,
-            ]);
+            ->with('Content', [
+                    'class' => 'col-md-9',
+                    'label' => 'Контент'
+                ])
+                ->add('title', TextType::class, ['label' => 'Заголовок'], ['translation_domain' => 'AnotherDomain'])
+                ->add('body', TextareaType::class, ['label' => 'Текст поста'])
+            ->end()
+            ->with('Meta data', [
+                    'class' => 'col-md-3',
+                    'label' => 'Мета дані'
+                ])
+                ->add('active', CheckboxType::class, [
+                    'data' => false,
+                    'required' => false,
+                    'label' => 'Активний'
+                ])
+                ->add('published', CheckboxType::class, [
+                    'data' => false,
+                    'required' => false,
+                    'label' => 'Опублікований'
+                ])
+                ->add('category', ModelType::class, [
+                    'class' => Category::class,
+                    'property' => 'name',
+                    'label' => 'Категорія'
+            ])
+                ->add('file', FileType::class, [
+                    'required' => false,
+                    'label' => 'Файл'
+                ])
+        ->end()
+        ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $filter->add('title');
-        $filter->add('body');
-        $filter->add('active');
-        $filter->add('published');
-        $filter->add('category');
-        $filter->add('image');
+        $filter->add('title')
+            ->add('body')
+            ->add('active')
+            ->add('published')
+            ->add('category', null, [
+                'field_type' => EntityType::class,
+                'field_options' => [
+                    'class' => Category::class,
+                    'choice_label' => 'name'
+                ]
+            ])
+            ->add('image');
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('title');
-        $list->addIdentifier('body');
-        $list->addIdentifier('active');
-        $list->addIdentifier('published');
-        $list->addIdentifier('category');
-        $list->addIdentifier('image');
+        $list->addIdentifier('title')
+            ->add('body')
+            ->add('active')
+            ->add('published')
+            ->add('category.name')
+            ->add('image');
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show->add('title');
-        $show->add('body');
-        $show->add('active');
-        $show->add('published');
-        $show->add('category');
-        $show->add('image');
+        $show->add('title')
+            ->add('body')
+            ->add('active')
+            ->add('published')
+            ->add('category.name')
+            ->add('image');
     }
 
     public function prePersist(object $image): void
@@ -75,7 +104,14 @@ class PostAdmin extends AbstractAdmin
     private function manageFileUpload(object $image): void
     {
         if ($image->getFile()) {
-            $image->refreshUpdated();
+            $image->lifecycleFileUpload();
         }
+    }
+
+    public function toString(object $object): string
+    {
+        return $object instanceof Post
+            ? $object->getTitle()
+            : 'Post';
     }
 }

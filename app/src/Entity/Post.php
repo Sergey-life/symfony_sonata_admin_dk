@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
-    const SERVER_PATH_TO_IMAGE_FOLDER = '/public/images';
+    const SERVER_PATH_TO_IMAGE_FOLDER = 'public/images';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -29,7 +29,7 @@ class Post
     private ?string $body = null;
 
     #[ORM\Column(length: 255)]
-    private ?UploadedFile $image = null;
+    private ?string $image = null;
 
     #[ORM\Column]
     private ?bool $active = null;
@@ -37,16 +37,28 @@ class Post
     #[ORM\Column]
     private ?bool $published = null;
 
+    #[Gedmo\Timestampable(on:"update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
     #[Gedmo\Timestampable(on:"update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $updated = null;
-
-    #[Gedmo\Timestampable(on:"update")]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    /**
+     * Unmapped property to handle file uploads
+     */
+    private $file;
+
+    public function setFile(?UploadedFile $file = null): void
+    {
+        $this->file = $file;
+    }
+
+    public function getFile(): ?UploadedFile
+    {
+        return $this->file;
+    }
 
     public function getId(): ?int
     {
@@ -94,7 +106,7 @@ class Post
         return $this->image;
     }
 
-    public function setImage(?UploadedFile $image = null): self
+    public function setImage(?string $image = null): self
     {
         $this->image = $image;
 
@@ -167,7 +179,7 @@ class Post
     public function upload(): void
     {
         // the file property can be empty if the field is not required
-        if (null === $this->getImage()) {
+        if (null === $this->getFile()) {
             return;
         }
 
@@ -175,16 +187,16 @@ class Post
         // sanitize it at least to avoid any security issues
 
         // move takes the target directory and target filename as params
-        $this->getImage()->move(
+        $this->getFile()->move(
             self::SERVER_PATH_TO_IMAGE_FOLDER,
-            $this->getImage()->getClientOriginalName()
+            $this->getFile()->getClientOriginalName()
         );
 
         // set the path property to the filename where you've saved the file
-        $this->filename = $this->getImage()->getClientOriginalName();
+        $this->image = $this->getFile()->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
-        $this->setImage(null);
+        $this->setFile(null);
     }
 
     /**
@@ -198,10 +210,10 @@ class Post
     /**
      * Updates the hash value to force the preUpdate and postUpdate events to fire.
      */
-    public function refreshUpdated(): void
-    {
-        $this->setUpdated(new \DateTime());
-    }
+//    public function refreshUpdated(): void
+//    {
+//        $this->setUpdated(new \DateTime());
+//    }
 
     // ... the rest of your class lives under here, including the generated fields
     //     such as filename and updated
