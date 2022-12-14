@@ -149,18 +149,6 @@ class Post
         return $this;
     }
 
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(\DateTimeInterface $updated): self
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
@@ -199,22 +187,8 @@ class Post
         $this->setFile(null);
     }
 
-    /**
-     * Lifecycle callback to upload the file to the server.
-     */
     public function lifecycleFileUpload(): void
     {
         $this->upload();
     }
-
-    /**
-     * Updates the hash value to force the preUpdate and postUpdate events to fire.
-     */
-//    public function refreshUpdated(): void
-//    {
-//        $this->setUpdated(new \DateTime());
-//    }
-
-    // ... the rest of your class lives under here, including the generated fields
-    //     such as filename and updated
 }
