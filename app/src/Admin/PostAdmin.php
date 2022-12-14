@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\File;
 
 class PostAdmin extends AbstractAdmin
 {
@@ -25,7 +26,7 @@ class PostAdmin extends AbstractAdmin
                     'class' => 'col-md-9',
                     'label' => 'Контент'
                 ])
-                ->add('title', TextType::class, ['label' => 'Заголовок'], ['translation_domain' => 'AnotherDomain'])
+                ->add('title', TextType::class, ['label' => 'Заголовок'])
                 ->add('body', TextareaType::class, ['label' => 'Текст поста'])
             ->end()
             ->with('Meta data', [
@@ -33,12 +34,10 @@ class PostAdmin extends AbstractAdmin
                     'label' => 'Мета дані'
                 ])
                 ->add('active', CheckboxType::class, [
-                    'data' => false,
                     'required' => false,
                     'label' => 'Активний'
                 ])
                 ->add('published', CheckboxType::class, [
-                    'data' => false,
                     'required' => false,
                     'label' => 'Опублікований'
                 ])
@@ -49,7 +48,16 @@ class PostAdmin extends AbstractAdmin
             ])
                 ->add('file', FileType::class, [
                     'required' => false,
-                    'label' => 'Файл'
+                    'label' => 'Зображення',
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '2048k',
+                            'mimeTypes' => [
+                                'image/*',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid image',
+                        ])
+                    ]
                 ])
         ->end()
         ;
@@ -57,38 +65,39 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $filter->add('title')
-            ->add('body')
-            ->add('active')
-            ->add('published')
+        $filter->add('title', null, ['label' => 'Заголовок'])
+            ->add('body', null, ['label' => 'Текст поста'])
+            ->add('active', null, ['label' => 'Активний'])
+            ->add('published', null, ['label' => 'Опублікований'])
             ->add('category', null, [
                 'field_type' => EntityType::class,
+                'label' => 'Категорія',
                 'field_options' => [
                     'class' => Category::class,
-                    'choice_label' => 'name'
+                    'choice_label' => 'name',
                 ]
             ])
-            ->add('image');
+            ->add('image', null, ['label' => 'Зображення']);
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('title')
-            ->add('body')
-            ->add('active')
-            ->add('published')
-            ->add('category.name')
-            ->add('image');
+        $list->addIdentifier('title', null, ['label' => 'Заголовок'])
+            ->add('body', null, ['label' => 'Текст поста'])
+            ->add('active', null, ['label' => 'Активний'])
+            ->add('published', null, ['label' => 'Опублікований'])
+            ->add('category.name', null , ['label' => 'Категорія'])
+            ->add('image', null, ['label' => 'Зображення']);
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show->add('title')
-            ->add('body')
-            ->add('active')
-            ->add('published')
-            ->add('category.name')
-            ->add('image');
+        $show->add('title', null, ['label' => 'Заголовок'])
+            ->add('body', null, ['label' => 'Текст поста'])
+            ->add('active', null, ['label' => 'Активний'])
+            ->add('published', null, ['label' => 'Опублікований'])
+            ->add('category.name', null , ['label' => 'Категорія'])
+            ->add('image', null, ['label' => 'Зображення']);
     }
 
     public function prePersist(object $image): void

@@ -96,6 +96,9 @@
       <path value="$PROJECT_DIR$/app/vendor/gedmo/doctrine-extensions" />
       <path value="$PROJECT_DIR$/app/vendor/stof/doctrine-extensions-bundle" />
       <path value="$PROJECT_DIR$/app/vendor/behat/transliterator" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/web-profiler-bundle" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-intl-idn" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
