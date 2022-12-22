@@ -5,8 +5,13 @@ sonata_admin:
             - { type: sonata.admin.block.admin_list, position: left }
     options:
         default_group: Контент
+    assets:
+        extra_javascripts:
+            - bundles/runroomsortablebehavior/js/jquery-ui.min.js
+            - bundles/runroomsortablebehavior/js/init.js
 
 sonata_block:
     blocks:
         sonata.admin.block.admin_list:
             contexts: [admin]
+

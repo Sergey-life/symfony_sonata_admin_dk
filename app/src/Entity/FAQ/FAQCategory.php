@@ -8,11 +8,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Runroom\SortableBehaviorBundle\Behaviors\Sortable;
 
 #[ORM\Entity(repositoryClass: FAQCategoryRepository::class)]
 class FAQCategory
 {
-    private const DEFAULT_PRIORITY = 0;
+    use Sortable;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -24,8 +26,9 @@ class FAQCategory
     #[ORM\Column]
     private ?bool $active = null;
 
-    #[ORM\Column]
-    private ?int $priority = null;
+    #[ORM\Column(name: 'position', type: 'integer')]
+    #[Gedmo\SortablePosition]
+    private ?int $position = null;
 
     #[Gedmo\Timestampable(on:"update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -41,7 +44,6 @@ class FAQCategory
     public function __construct()
     {
         $this->questions = new ArrayCollection();
-        $this->priority = self::DEFAULT_PRIORITY;
     }
 
     public function getId(): ?int
@@ -127,14 +129,14 @@ class FAQCategory
         return $this;
     }
 
-    public function getPriority(): ?int
+    public function getPosition(): ?int
     {
-        return $this->priority;
+        return $this->position;
     }
 
-    public function setPriority(int $priority): self
+    public function setPosition(int $position): self
     {
-        $this->priority = $priority;
+        $this->position = $position;
 
         return $this;
     }

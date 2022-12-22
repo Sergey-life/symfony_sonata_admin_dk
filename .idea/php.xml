@@ -99,6 +99,8 @@
       <path value="$PROJECT_DIR$/app/vendor/symfony/web-profiler-bundle" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/app/vendor/pixassociates/sortable-behavior-bundle" />
+      <path value="$PROJECT_DIR$/app/vendor/runroom-packages/sortable-behavior-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">

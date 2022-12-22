@@ -10,9 +10,14 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Runroom\SortableBehaviorBundle\Admin\SortableAdminTrait;
+use Sonata\AdminBundle\Route\RouteCollectionInterface;
+
 
 class FAQCategoryAdmin extends AbstractAdmin
 {
+    use SortableAdminTrait;
+
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -29,7 +34,17 @@ class FAQCategoryAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('name');
+        $list
+            ->addIdentifier('name')
+            ->add('position')
+            ->add(ListMapper::NAME_ACTIONS, ListMapper::TYPE_ACTIONS, [
+                'actions' => [
+                    'move' => [
+                        'template' => '@RunroomSortableBehavior/sort_drag_drop.html.twig',
+                        'enable_top_bottom_buttons' => true, // optional
+                    ],
+                ]
+            ]);
     }
 
     protected function configureShowFields(ShowMapper $show): void
@@ -43,4 +58,9 @@ class FAQCategoryAdmin extends AbstractAdmin
             ? $object->getName()
             : 'FAQCategory';
     }
+
+//    protected function configureRoutes(RouteCollectionInterface $collection): void
+//    {
+//        $collection->add('move', $this->getRouterIdParameter().'/move/{position}');
+//    }
 }

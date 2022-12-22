@@ -15,6 +15,13 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    gedmo.listener.sortable:
+        class: Gedmo\Sortable\SortableListener
+        calls:
+            - [setAnnotationReader, ['@annotation_reader']]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+
     admin.category:
         class: App\Admin\CategoryAdmin
         tags:
