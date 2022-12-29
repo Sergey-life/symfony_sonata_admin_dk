@@ -26,8 +26,8 @@ class FAQCategory
     #[ORM\Column]
     private ?bool $active = null;
 
-    #[ORM\Column(name: 'position', type: 'integer')]
     #[Gedmo\SortablePosition]
+    #[ORM\Column(type: 'integer', name: 'position')]
     private ?int $position = null;
 
     #[Gedmo\Timestampable(on:"update")]

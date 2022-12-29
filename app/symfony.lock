@@ -41,9 +41,6 @@
     "knplabs/knp-menu-bundle": {
         "version": "v3.2.0"
     },
-    "pixassociates/sortable-behavior-bundle": {
-        "version": "v1.5"
-    },
     "runroom-packages/sortable-behavior-bundle": {
         "version": "0.16.0"
     },

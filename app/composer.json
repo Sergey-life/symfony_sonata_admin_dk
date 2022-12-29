@@ -11,7 +11,6 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
         "gedmo/doctrine-extensions": "^3.10",
-        "pixassociates/sortable-behavior-bundle": "^1.5",
         "runroom-packages/sortable-behavior-bundle": "^0.16.0",
         "sonata-project/admin-bundle": "^4.21",
         "sonata-project/doctrine-orm-admin-bundle": "^4.9",
@@ -22,6 +21,7 @@
         "symfony/framework-bundle": "5.4.*",
         "symfony/mime": "5.4.*",
         "symfony/runtime": "5.4.*",
+        "symfony/templating": "5.4.*",
         "symfony/translation": "5.4.*",
         "symfony/yaml": "5.4.*"
     },

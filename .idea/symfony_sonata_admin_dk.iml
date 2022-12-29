@@ -103,7 +103,7 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/web-profiler-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-intl-idn" />
-      <excludeFolder url="file://$MODULE_DIR$/app/vendor/pixassociates/sortable-behavior-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/templating" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/runroom-packages/sortable-behavior-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />

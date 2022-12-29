@@ -15,37 +15,40 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    gedmo.listener.sortable:
-        class: Gedmo\Sortable\SortableListener
-        calls:
-            - [setAnnotationReader, ['@annotation_reader']]
-        tags:
-            - { name: doctrine.event_subscriber, connection: default }
+# сортировка
+    app.action.move.test:
+        class: App\Action\MoveTestAction
 
+    Runroom\SortableBehaviorBundle\Service\AbstractPositionHandler:
+        autowire: true
+    Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface:
+        autowire: true
+    Gedmo\Sortable\SortableListener:
+        autowire: true
+
+# Admin
     admin.category:
         class: App\Admin\CategoryAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Категорія }
+            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Category }
 
     admin.post:
         class: App\Admin\PostAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Post, manager_type: orm, label: Пост }
+            - { name: sonata.admin, model_class: App\Entity\Post, manager_type: orm, label: Post }
         public: true
 
     #FAQ
     admin.faq-category:
         class: App\Admin\FAQ\FAQCategoryAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQCategory, manager_type: orm, label: FAQ категорії }
+            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQCategory, manager_type: orm, label: FAQCategory }
 
     admin.faq-question:
         class: App\Admin\FAQ\FAQQuestionAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQQuestion, manager_type: orm, label: FAQ запитння та відповді }
+            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQQuestion, manager_type: orm, label: FAQQuestion }
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
         exclude:

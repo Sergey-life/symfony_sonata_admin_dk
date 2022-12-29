@@ -1,13 +1,12 @@
 runroom_sortable_behavior:
-  # position_handler can be any service id that implements the PositionHandlerInterface
-#  position_handler: Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler # or Runroom\SortableBehaviorBundle\Service\ORMPositionHandler if gedmo is not found
+  position_handler: runroom.sortable_behavior.service.gedmo_position
   position_field:
     default: position # Default field name for the position
     # Only needed when not using Gedmo
     entities:
-      App\Entity\FAQCategory: position
-      App\Entity\FAQQuestion: position
-  # Only needed when not using Gedmo
-#  sortable_groups:
-#    entities:
-#      App\Entity\Baz: [group]
+      App\Entity\FAQ\FAQCategory: position
+      #      App\Entity\Baz: rang
+      # Only needed when not using Gedmo
+#      sortable_groups:
+#        entities:
+#          App\Entity\FAQ\FAQCategory: [group]
