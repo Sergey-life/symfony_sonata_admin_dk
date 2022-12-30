@@ -10,8 +10,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-//use Runroom\SortableBehaviorBundle\Admin\SortableAdminTrait;
-use App\Admin\SortableAdminTrait;
+use App\Admin\FAQ\SortableAdminTrait;
 
 
 class FAQCategoryAdmin extends AbstractAdmin

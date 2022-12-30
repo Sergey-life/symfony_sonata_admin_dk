@@ -15,18 +15,17 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-# сортировка
-    app.action.move.test:
-        class: App\Action\MoveTestAction
+    # Підключаємо класи сортировки єлементів
+    app.action.move:
+        class: App\Action\MoveAction
 
-    Runroom\SortableBehaviorBundle\Service\AbstractPositionHandler:
+    Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler:
         autowire: true
-    Runroom\SortableBehaviorBundle\Service\PositionHandlerInterface:
-        autowire: true
+
     Gedmo\Sortable\SortableListener:
         autowire: true
 
-# Admin
+    # Admin
     admin.category:
         class: App\Admin\CategoryAdmin
         tags:
