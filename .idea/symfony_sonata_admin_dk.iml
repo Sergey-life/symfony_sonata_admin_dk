@@ -105,6 +105,7 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/polyfill-intl-idn" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/templating" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/runroom-packages/sortable-behavior-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/friendsofsymfony/ckeditor-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

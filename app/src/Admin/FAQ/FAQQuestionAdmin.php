@@ -5,6 +5,7 @@ namespace App\Admin\FAQ;
 use App\Entity\Category;
 use App\Entity\FAQ\FAQCategory;
 use App\Entity\FAQ\FAQQuestion;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -21,7 +22,11 @@ class FAQQuestionAdmin extends AbstractAdmin
     {
         $form
             ->add('question', TextType::class)
-            ->add('answer', TextareaType::class)
+            ->add('answer', CKEditorType::class, [
+                'config' => [
+                    'uiColor' => '#ffffff',
+                ]
+            ])
             ->add('category', ModelType::class, [
                 'class' => FAQCategory::class,
                 'property' => 'name',

@@ -4,7 +4,12 @@ RUN docker-php-ext-install pdo pdo_mysql
 
 RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash
 
-RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN apk add --no-cache \
+      libzip-dev \
+      zip \
+    && docker-php-ext-install zip
+
+RUN #pecl install xdebug && docker-php-ext-enable xdebug
 
 # Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

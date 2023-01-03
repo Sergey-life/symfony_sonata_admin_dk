@@ -101,6 +101,7 @@
       <path value="$PROJECT_DIR$/app/vendor/symfony/polyfill-intl-idn" />
       <path value="$PROJECT_DIR$/app/vendor/symfony/templating" />
       <path value="$PROJECT_DIR$/app/vendor/runroom-packages/sortable-behavior-bundle" />
+      <path value="$PROJECT_DIR$/app/vendor/friendsofsymfony/ckeditor-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
