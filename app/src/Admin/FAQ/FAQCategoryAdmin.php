@@ -38,7 +38,6 @@ class FAQCategoryAdmin extends AbstractAdmin
         $list
             ->addIdentifier('name')
             ->add('active')
-            ->add('position')
             ->add(ListMapper::NAME_ACTIONS, ListMapper::TYPE_ACTIONS, [
                 'actions' => [
                     'move' => [

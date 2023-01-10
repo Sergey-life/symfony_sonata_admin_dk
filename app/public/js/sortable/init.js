@@ -65,9 +65,10 @@ var DraggableTable = function(element) {
                 },
                 'success': function(data) {
                     $document.trigger('SortableBehaviorBundle.success', [data]);
-                    element.find('.sonata-ba-list-field-integer').each(function (index, item) {
-                        $(item).html(first + (index * direction));
-                    });
+                    // Міняємо позицію елемента
+                    // element.find('.sonata-ba-list-field-integer').each(function (index, item) {
+                    //     $(item).html(first + (index * direction));
+                    // });
                 },
                 'complete': function() {
                     $document.trigger('SortableBehaviorBundle.complete');
