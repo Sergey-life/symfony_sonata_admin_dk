@@ -13,11 +13,13 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Admin\FAQ\SortableAdminTrait;
 
 class FAQQuestionAdmin extends AbstractAdmin
 {
+    use SortableAdminTrait;
+
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -43,7 +45,24 @@ class FAQQuestionAdmin extends AbstractAdmin
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('question');
+        $list->addIdentifier('question')
+            ->add('active')
+            ->add('position')
+            ->add(ListMapper::NAME_ACTIONS, ListMapper::TYPE_ACTIONS, [
+                'actions' => [
+                    'move' => [
+                        'template' => '@RunroomSortableBehavior/sort_drag_drop.html.twig',
+                        'enable_top_bottom_buttons' => false, // optional
+                    ],
+                    'edit' => [
+                        // You may add custom link parameters used to generate the action url
+                        'link_parameters' => [
+                            'full' => true,
+                        ]
+                    ],
+                    'delete' => [],
+                ]
+            ]);
     }
 
     protected function configureShowFields(ShowMapper $show): void

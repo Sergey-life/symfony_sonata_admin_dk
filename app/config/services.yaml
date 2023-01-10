@@ -41,12 +41,14 @@ services:
     admin.faq-category:
         class: App\Admin\FAQ\FAQCategoryAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQCategory, manager_type: orm, label: FAQCategory }
+            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQCategory, manager_type: orm, group: 'FAQ', label: FAQCategory }
+        calls:
+            - [ addChild, [ '@admin.faq-question', 'category' ] ]
 
     admin.faq-question:
         class: App\Admin\FAQ\FAQQuestionAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQQuestion, manager_type: orm, label: FAQQuestion }
+            - { name: sonata.admin, model_class: App\Entity\FAQ\FAQQuestion, manager_type: orm ,group: 'FAQ', label: FAQQuestion }
 
     App\:
         resource: '../src/'

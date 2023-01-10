@@ -5,6 +5,7 @@ runroom_sortable_behavior:
     # Only needed when not using Gedmo
     entities:
       App\Entity\FAQ\FAQCategory: position
+      App\Entity\FAQ\FAQQuestion: position
       #      App\Entity\Baz: rang
       # Only needed when not using Gedmo
 #      sortable_groups:

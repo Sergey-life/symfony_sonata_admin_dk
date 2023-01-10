@@ -68,7 +68,6 @@ var DraggableTable = function(element) {
                     element.find('.sonata-ba-list-field-integer').each(function (index, item) {
                         $(item).html(first + (index * direction));
                     });
-                    console.log('test')
                 },
                 'complete': function() {
                     $document.trigger('SortableBehaviorBundle.complete');
