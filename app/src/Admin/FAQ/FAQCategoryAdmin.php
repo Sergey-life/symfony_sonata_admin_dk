@@ -77,7 +77,7 @@ class FAQCategoryAdmin extends AbstractAdmin
         $admin = $this->isChild() ? $this->getParent() : $this;
         $id = $admin->getRequest()->get('id');
 
-//        $menu->addChild('View FAQCategory', $admin->generateMenuUrl('show', ['id' => $id]));
+        $menu->addChild('View Category', $admin->generateMenuUrl('show', ['id' => $id]));
 
         if ($this->isGranted('EDIT')) {
             $menu->addChild('Edit', $admin->generateMenuUrl('edit', ['id' => $id]));

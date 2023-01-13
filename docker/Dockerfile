@@ -9,7 +9,7 @@ RUN apk add --no-cache \
       zip \
     && docker-php-ext-install zip
 
-RUN #pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 
 # Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

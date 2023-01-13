@@ -26,8 +26,8 @@ class PostAdmin extends AbstractAdmin
                     'class' => 'col-md-9',
                     'label' => 'Контент'
                 ])
-                ->add('title', TextType::class, ['label' => 'Заголовок'])
-                ->add('body', TextareaType::class, ['label' => 'Текст поста'])
+                ->add('title', TextType::class)
+                ->add('body', TextareaType::class)
             ->end()
             ->with('Meta data', [
                     'class' => 'col-md-3',
@@ -35,16 +35,13 @@ class PostAdmin extends AbstractAdmin
                 ])
                 ->add('active', CheckboxType::class, [
                     'required' => false,
-                    'label' => 'Активний'
                 ])
                 ->add('published', CheckboxType::class, [
                     'required' => false,
-                    'label' => 'Опублікований'
                 ])
                 ->add('category', ModelType::class, [
                     'class' => Category::class,
                     'property' => 'name',
-                    'label' => 'Категорія'
             ])
                 ->add('file', FileType::class, [
                     'required' => false,
@@ -65,10 +62,10 @@ class PostAdmin extends AbstractAdmin
 
     protected function configureDatagridFilters(DatagridMapper $filter): void
     {
-        $filter->add('title', null, ['label' => 'Заголовок'])
-            ->add('body', null, ['label' => 'Текст поста'])
-            ->add('active', null, ['label' => 'Активний'])
-            ->add('published', null, ['label' => 'Опублікований'])
+        $filter->add('title')
+            ->add('body')
+            ->add('active')
+            ->add('published')
             ->add('category', null, [
                 'field_type' => EntityType::class,
                 'label' => 'Категорія',
@@ -77,27 +74,27 @@ class PostAdmin extends AbstractAdmin
                     'choice_label' => 'name',
                 ]
             ])
-            ->add('image', null, ['label' => 'Зображення']);
+            ->add('image');
     }
 
     protected function configureListFields(ListMapper $list): void
     {
-        $list->addIdentifier('title', null, ['label' => 'Заголовок'])
-            ->add('body', null, ['label' => 'Текст поста'])
-            ->add('active', null, ['label' => 'Активний'])
-            ->add('published', null, ['label' => 'Опублікований'])
-            ->add('category.name', null , ['label' => 'Категорія'])
-            ->add('image', null, ['label' => 'Зображення']);
+        $list->addIdentifier('title')
+            ->add('body')
+            ->add('active')
+            ->add('published')
+            ->add('category.name')
+            ->add('image');
     }
 
     protected function configureShowFields(ShowMapper $show): void
     {
-        $show->add('title', null, ['label' => 'Заголовок'])
-            ->add('body', null, ['label' => 'Текст поста'])
-            ->add('active', null, ['label' => 'Активний'])
-            ->add('published', null, ['label' => 'Опублікований'])
-            ->add('category.name', null , ['label' => 'Категорія'])
-            ->add('image', null, ['label' => 'Зображення']);
+        $show->add('title')
+            ->add('body')
+            ->add('active')
+            ->add('published')
+            ->add('category.name')
+            ->add('image');
     }
 
     public function prePersist(object $image): void

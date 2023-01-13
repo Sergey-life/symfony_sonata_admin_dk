@@ -1,10 +1,3 @@
-Post List: Список постів
-Post Create: Створити новий пост
-Category List: Список категорій
-Category Create: Створити нову категорію
-Post: Пости
-Category: Категорії
-
 #FAQ
 F A Q Category List: FAQ категорії
 F A Q Question List: FAQ запитання та відповіді
@@ -13,6 +6,7 @@ FAQQuestion: FAQ запитання та відповіді
 
 F A Q Category: FAQ
 F A Q Category Create: Створити нову категорію
+View Category: Подивитись категорію
 
 F A Q Question: FAQ Запитання
 Question: Запитання
@@ -26,3 +20,17 @@ Active: Активно
 Actions: Дії
 Position: Позиція
 Name: Назва
+
+#Post
+Post List: Список постів
+Post Create: Створити новий пост
+Category List: Список категорій
+Category Create: Створити нову категорію
+Post: Пости
+Category: Категорії
+Title: Заголовок
+Body: Текст
+Published: Опубліковано
+Image: Зображення
+
+

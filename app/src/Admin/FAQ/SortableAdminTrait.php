@@ -41,7 +41,7 @@ trait SortableAdminTrait
     protected function configureRoutes(object $collection): void
     {
         $collection->add('move', $this->getRouterIdParameter() . '/move/{position}', [
-            '_controller' => 'app.action.move',
+            '_controller' => 'App\Action\MoveAction',
         ]);
     }
 }
