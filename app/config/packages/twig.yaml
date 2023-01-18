@@ -2,6 +2,10 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+    # catalog post images
+    globals:
+        image_dir: 'public/images/'
+        fonts_dir: 'fonts'
 
 when@test:
     twig:

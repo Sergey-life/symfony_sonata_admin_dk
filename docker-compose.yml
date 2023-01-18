@@ -72,3 +72,7 @@ services:
     ports:
       - "8025:8025"
       - "1025:1025"
+    external_links:
+      - mailhog
+    networks:
+      - Symfony
