@@ -114,6 +114,7 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/phenx/php-svg-lib" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/sabberworm/php-css-parser" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/masterminds/html5" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/google-mailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

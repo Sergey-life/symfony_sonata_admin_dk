@@ -109,6 +109,7 @@
       <path value="$PROJECT_DIR$/app/vendor/phenx/php-svg-lib" />
       <path value="$PROJECT_DIR$/app/vendor/sabberworm/php-css-parser" />
       <path value="$PROJECT_DIR$/app/vendor/masterminds/html5" />
+      <path value="$PROJECT_DIR$/app/vendor/symfony/google-mailer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0">
