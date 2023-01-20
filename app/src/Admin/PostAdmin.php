@@ -84,7 +84,19 @@ class PostAdmin extends AbstractAdmin
             ->add('active')
             ->add('published')
             ->add('category.name')
-            ->add('image');
+            ->add('image')
+        ->add(ListMapper::NAME_ACTIONS, ListMapper::TYPE_ACTIONS, [
+        'actions' => [
+            'edit' => [
+                // You may add custom link parameters used to generate the action url
+                'link_parameters' => [
+                    'full' => true,
+                ]
+            ],
+            'delete' => [],
+            'send email' => ['template' => 'email/button_send_email_post.html.twig'],
+        ]
+    ]);
     }
 
     protected function configureShowFields(ShowMapper $show): void
