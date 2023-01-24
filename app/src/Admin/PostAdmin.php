@@ -84,7 +84,7 @@ class PostAdmin extends AbstractAdmin
             ->add('active')
             ->add('published')
             ->add('category.name')
-            ->add('image')
+            ->add('image', null , ['template' => 'Admin/image_post.html.twig'])
         ->add(ListMapper::NAME_ACTIONS, ListMapper::TYPE_ACTIONS, [
         'actions' => [
             'edit' => [

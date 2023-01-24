@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
-    const SERVER_PATH_TO_IMAGE_FOLDER = 'public/images';
+    const SERVER_PATH_TO_IMAGE_FOLDER = 'images';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

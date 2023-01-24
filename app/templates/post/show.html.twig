@@ -14,6 +14,7 @@
     <hr>
     {% if(imageSrc is not defined) %}
         <img src="{{ asset(image_dir ~ post.image) }}" class="img-fluid card-img-top">
+{#        {% include 'post/image_post.html.twig' with {'image': post.image} %}#}
     {% else %}
         <img src="{{ imageSrc }}" class="img-fluid card-img-top">
     {% endif %}

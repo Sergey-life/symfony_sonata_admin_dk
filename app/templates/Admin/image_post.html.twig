@@ -1,0 +1,9 @@
+{% extends '@SonataAdmin/CRUD/base_list_field.html.twig' %}
+
+{% block field %}
+    {% if object.image != null %}
+        <img alt="airline" width="120" height="50" src="{{ asset(image_dir ~ object.image) }}" class="img-fluid card-img-top">
+    {% else %}
+        <span>No picture</span>
+    {% endif %}
+{% endblock %}
