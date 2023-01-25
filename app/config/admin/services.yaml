@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  # Підключаємо класи сортировки єлементів
+  App\Action\MoveAction:
+
+  Runroom\SortableBehaviorBundle\Service\GedmoPositionHandler:
+
+  Gedmo\Sortable\SortableListener:
