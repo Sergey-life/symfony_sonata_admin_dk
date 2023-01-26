@@ -6,7 +6,8 @@
 imports:
     - { resource: 'admin/services.yaml' }
 parameters:
-    images_directory: '%kernel.project_dir%/public/uploads'
+    images_directory: '%kernel.project_dir%/public/images/'
+    pdf_directory: '%kernel.project_dir%/public/pdf/'
     locale: uk
 services:
     App\Admin\PostAdmin:

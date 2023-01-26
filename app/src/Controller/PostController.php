@@ -27,7 +27,7 @@ class PostController extends AbstractController
     public function sendEmail(int $id, PostRepository $postRepository, MailerInterface $mailer)
     {
         $post = $postRepository->find($id);
-
+    # Generate pdf from html
         $tmp = $this->getParameter('kernel.project_dir').'/public/tmp';
         $dompdf = new Dompdf([
             'logOutputFile' => '',
@@ -41,16 +41,17 @@ class PostController extends AbstractController
         $options->setDefaultFont('Pacifico');
         $html = $this->renderView('post/show.html.twig', [
             'post' => $postRepository->find($id),
-            'imageSrc' => $this->imageToBase64($this->getParameter('kernel.project_dir').'/public/images/'.$post->getImage())
+            'imageSrc' => $this->imageToBase64($this->getParameter('images_directory').$post->getImage())
         ]);
         $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A4');
         $dompdf->render();
         $output = $dompdf->output();
 
-        $pdfFilePath = $this->getParameter('kernel.project_dir').'/public/pdf/post.pdf';
+        $pdfFilePath = $this->getParameter('pdf_directory').'post.pdf';
         file_put_contents($pdfFilePath, $output);
 
+        #Send pdf on email
         $email = (new Email())
             ->from('serhii.kharchenko333@gmail.com')
             ->to('strongpati215@gmail.com')
