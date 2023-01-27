@@ -5,6 +5,7 @@ twig:
     # catalog post images
     globals:
         image_dir: 'images/'
+        fonts_directory: '%kernel.project_dir%/public/fonts/'
 
 when@test:
     twig:
