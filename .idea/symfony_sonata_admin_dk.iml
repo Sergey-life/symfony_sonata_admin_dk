@@ -115,6 +115,8 @@
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/sabberworm/php-css-parser" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/masterminds/html5" />
       <excludeFolder url="file://$MODULE_DIR$/app/vendor/symfony/google-mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/app/vendor/doctrine/data-fixtures" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
