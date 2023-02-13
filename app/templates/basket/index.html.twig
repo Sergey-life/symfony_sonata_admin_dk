@@ -40,11 +40,13 @@
                             <small>{{ item.vars.data.product.description[:50] }}...</small>
                             <div class="form-inline mt-2">
                                 <div class="form-group mb-0 mr-2">
-                                    {{ form_widget(item.quantity, {
-                                        'attr': {
-                                            'class': 'form-control form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
-                                        }
-                                    }) }}
+                                    {{ form_widget(item.decr, {'attr': {'class': 'btn btn-danger btn-sm'}}) }}
+                                        {{ form_widget(item.quantity, {
+                                            'attr': {
+                                                'class': 'form-control form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
+                                            }
+                                        }) }}
+                                    {{ form_widget(item.incr, {'attr': {'class': 'btn btn-success btn-sm'}}) }}
                                     <div class="invalid-feedback">
                                         {{ form_errors(item.quantity) }}
                                     </div>

@@ -18,14 +18,13 @@ class BasketItemType extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('remove', SubmitType::class);
-//            ->add('product', EntityType::class, [
-//                'class' => Product::class,
-//                'choice_label' => 'name',
-//            ])
-//            ->add('basket')
-//            ->add('save', SubmitType::class)
-//            ->add('clear', SubmitType::class);
+            ->add('remove', SubmitType::class)
+            ->add('decr', SubmitType::class, [
+                'label' => '-'
+            ])
+            ->add('incr', SubmitType::class, [
+                'label' => '+'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

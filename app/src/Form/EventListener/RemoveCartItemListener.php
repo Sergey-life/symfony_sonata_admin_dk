@@ -13,18 +13,6 @@ use Symfony\Component\Form\FormEvents;
 
 class RemoveCartItemListener implements EventSubscriberInterface
 {
-//    private $basketRepository;
-
-///**
-//* CartManager constructor.
-//*
-//* @param BasketRepository $basketRepository
-//*/
-//    public function __construct(BasketRepository $basketRepository)
-//    {
-//        $this->basketRepository = $basketRepository;
-//    }
-
     /**
      * @inheritDoc
      */
@@ -52,6 +40,24 @@ class RemoveCartItemListener implements EventSubscriberInterface
             if ($child->get('remove')->isClicked()) {
                 $basket->removeItem($child->getData());
                 break;
+            }
+            // If clicked decr
+            if ($child->get('decr')->isClicked()) {
+                if ($child->getData()->getQuantity() > 1) {
+                    $child->getData()->setQuantity($child->getData()->getQuantity() - 1);
+                }
+                else
+                {
+                    $basket->removeItem($child->getData());
+                }
+                break;
+            }
+            // If clicked incr
+            if ($child->get('incr')->isClicked()) {
+                if ($child->getData()->getQuantity() >= 1) {
+                    $child->getData()->setQuantity($child->getData()->getQuantity() + 1);
+                    break;
+                }
             }
         }
     }
