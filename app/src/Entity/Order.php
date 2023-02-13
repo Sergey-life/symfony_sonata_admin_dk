@@ -12,6 +12,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    /**
+     * An order that is in progress, not placed yet.
+     *
+     * @var string
+     */
+    const STATUS_CART = 'new';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -19,13 +26,6 @@ class Order
 
     #[ORM\Column(length: 255)]
     private ?string $status = self::STATUS_CART;
-
-    /**
-     * An order that is in progress, not placed yet.
-     *
-     * @var string
-     */
-    const STATUS_CART = 'new';
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]

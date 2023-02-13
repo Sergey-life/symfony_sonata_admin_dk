@@ -12,6 +12,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: BasketRepository::class)]
 class Basket
 {
+    /**
+     * @var string
+     */
+    const STATUS_BASKET = [
+        'open' => 'open',
+        'closed' => 'closed'
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,9 +35,6 @@ class Basket
     #[Gedmo\Timestampable(on:"update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
-
-//    #[ORM\OneToMany(mappedBy: 'basket', targetEntity: BasketItem::class, orphanRemoval: true)]
-//    private Collection $basket;
 
     #[ORM\OneToMany(mappedBy: 'basket', targetEntity: BasketItem::class, cascade: ["persist", "remove"], orphanRemoval: true)]
     private Collection $items;
@@ -98,7 +103,6 @@ class Basket
                 )
                     ->setStatus(Order::STATUS_CART)
                     ->setSum($item->getProduct()->getPrice() * $existingItem->getQuantity())
-//                    ->setTotalSum($this->getTotal())
                     ->setProduct($item->getProduct());
 
                 return $this;

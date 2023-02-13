@@ -55,22 +55,14 @@ class CartSessionStorage
     /**
      * Gets the cart in session.
      *
-     * @return Order|null
+     * @return Basket|null
      */
-    public function getCart(): ?Basket
-    {
-        return $this->cartRepository->findOneBy([
-            'id' => 1,//$this->getCartId(),
-            'status' => Order::STATUS_CART
-        ]);
-    }
 
-    //test method
     public function getBasket(): ?Basket
     {
         return $this->basketRepository->findOneBy([
-            'id' => 1,//$this->getCartId(),
-            'status' => 'new'
+            'id' => $this->getCartId(),
+            'status' => Basket::STATUS_BASKET['open']
         ]);
     }
 

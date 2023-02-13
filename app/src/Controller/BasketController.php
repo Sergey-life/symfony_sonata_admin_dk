@@ -32,9 +32,6 @@ class BasketController extends AbstractController
             foreach ($cart->getItems() as $item) {
                 $cart->addItem($item, false, $totalSum);
             }
-//            $cart->getItems()->map(function ($value) use ($cart, $totalSum) {
-//                return $cart->addItem($value, false, $totalSum);
-//            });
             $cartManager->save($cart);
 
             return $this->redirectToRoute('app_basket');
