@@ -81,18 +81,6 @@ class BasketItem
         return $this;
     }
 
-//    public function getOrderRef(): ?Order
-//    {
-//        return $this->orderRef;
-//    }
-//
-//    public function setOrderRef(?Order $orderRef): self
-//    {
-//        $this->orderRef = $orderRef;
-//
-//        return $this;
-//    }
-
     /**
      * Calculates the item total.
      *

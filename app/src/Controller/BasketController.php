@@ -3,14 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Basket;
-use App\Entity\BasketItem;
 use App\Entity\Order;
-use App\Entity\Product;
-use App\Form\BasketItemType;
 use App\Form\CartType;
-use App\Repository\BasketItemRepository;
-use App\Repository\BasketRepository;
-use App\Repository\ProductRepository;
+use App\Repository\OrderRepository;
 use App\Service\CartManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +35,28 @@ class BasketController extends AbstractController
         return $this->render('basket/index.html.twig', [
             'cart' => $cart,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/order', name: 'app_make_order')]
+    public function makeOrder(CartManager $cartManager, OrderRepository $orderRepository): Response
+    {
+        $basket = $cartManager->getCurrentBasket();
+        foreach ($basket->getItems() as $item) {
+            $order = new Order();
+            $order->setProduct($item->getProduct())
+                ->setStatus(Order::STATUS_CART)
+                ->setSum($item->getSum())
+                ->setQuantity($item->getQuantity())
+                ->setTotalSum($item->getTotalSum());
+            $orderRepository->save($order, true);
+        }
+
+        $basket->setStatus(Basket::STATUS_BASKET['closed']);
+        $cartManager->save($basket);
+
+        return $this->render('basket/order.html.twig', [
+            'basket' => $basket
         ]);
     }
 }

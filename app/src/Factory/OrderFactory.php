@@ -23,8 +23,7 @@ class OrderFactory
     public function createBasket(): Basket
     {
         $basket = new Basket();
-        $basket
-            ->setStatus('new');
+        $basket->setStatus(Basket::STATUS_BASKET['open']);
 
         return $basket;
     }

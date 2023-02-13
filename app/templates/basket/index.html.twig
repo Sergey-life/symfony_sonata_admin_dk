@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container mt-4">
-        <h1>Your Cart</h1>
+        <h1>Ваш кошик</h1>
         {% if cart.items.count > 0 %}
             <div class="row mt-4">
                 <!-- List of items -->
@@ -14,7 +14,7 @@
             </div>
         {% else %}
             <div class="alert alert-info">
-                Your cart is empty. Go to the <a href="{{ path('all.products') }}">product list</a>.
+                Ваш кошик порожній. Перейти до <a href="{{ path('all.products') }}">списку продуктів</a>.
             </div>
         {% endif %}
     </div>
@@ -23,7 +23,7 @@
         {{ form_start(form) }}
         <div class="card">
             <div class="card-header bg-dark text-white d-flex">
-                <h5>Items</h5>
+                <h5>Продукти</h5>
                 <div class="ml-auto">
                     {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
                     {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
@@ -66,15 +66,15 @@
 
     <div class="col-md-4" style="margin-left: 66%">
         <div class="card mt-4 mt-md-0">
-            <h5 class="card-header bg-dark text-white">Summary</h5>
+            <h5 class="card-header bg-dark text-white">Сума замовлення</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between">
-                    <div><b>Total</b></div>
+                    <div><b>Всього до сплати</b></div>
                     <span><b>{{ cart.total }} €</b></span>
                 </li>
             </ul>
             <div class="card-body">
-                <a href="#" class="btn btn-warning w-100">Checkout</a>
+                <a href="{{ path('app_make_order') }}" class="btn btn-warning w-100">Оформити замовлення</a>
             </div>
         </div>
     </div>

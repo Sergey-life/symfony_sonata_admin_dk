@@ -43,7 +43,7 @@ class RemoveCartItemListener implements EventSubscriberInterface
             }
             // If clicked decr
             if ($child->get('decr')->isClicked()) {
-                if ($child->getData()->getQuantity() > 1) {
+                if ($child->getData()->getQuantity() > 1 ) {
                     $child->getData()->setQuantity($child->getData()->getQuantity() - 1);
                 }
                 else

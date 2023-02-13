@@ -48,12 +48,12 @@ class CartManager
      */
     public function getCurrentBasket(): Basket
     {
-        $cart = $this->cartSessionStorage->getBasket();
-        if (!$cart) {
-            $cart = $this->cartFactory->createBasket();
+        $basket = $this->cartSessionStorage->getBasket();
+        if (!$basket) {
+            $basket = $this->cartFactory->createBasket();
         }
 
-        return $cart;
+        return $basket;
     }
 
     /**
