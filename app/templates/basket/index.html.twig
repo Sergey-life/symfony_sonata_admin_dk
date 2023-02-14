@@ -16,6 +16,13 @@
             <div class="alert alert-info">
                 Ваш кошик порожній. Перейти до <a href="{{ path('all.products') }}">списку продуктів</a>.
             </div>
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
         {% endif %}
     </div>
 
@@ -27,6 +34,9 @@
                 <div class="ml-auto">
                     {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
                     {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                    {% if cart.items.count > 0 %}
+                        <a href="{{ path('app_delete_basket') }}" class="btn btn-danger">delete</a>
+                    {% endif %}
                 </div>
             </div>
             <ul class="list-group list-group-flush">

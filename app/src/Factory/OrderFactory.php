@@ -29,26 +29,6 @@ class OrderFactory
         return $basket;
     }
 
-//    /**
-//     * Creates an order.
-//     *
-//     * @return Order
-//     */
-//    public function createOrder($orderItems): Order
-//    {
-//        foreach ($orderItems as $item) {
-//            $order = new Order();
-//            $order
-//                ->setTotal($item->getTotal())
-//                ->setPrice($item->getPrice())
-//                ->setQuantity($item->getQuantity())
-//                ->setProduct($item->getProduct())
-//                ->setOrderRef($item->getId());
-//        }
-//
-//        return $order;
-//    }
-
     /**
      * Creates an item for a product.
      *

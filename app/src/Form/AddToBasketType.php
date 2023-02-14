@@ -14,9 +14,6 @@ class AddToBasketType extends AbstractType
     {
         $builder
             ->add('quantity')
-//            ->add('product')
-//            ->add('basket')
-//            ->add('orderRef')
             ->add('add', SubmitType::class, [
                 'label' => 'Add to cart'
             ]);

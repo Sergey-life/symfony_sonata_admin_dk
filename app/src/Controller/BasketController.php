@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Basket;
 use App\Entity\OrderItem;
 use App\Form\CartType;
+use App\Repository\BasketRepository;
 use App\Repository\OrderRepository;
 use App\Service\CartManager;
+use FontLib\Table\Type\name;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,5 +48,16 @@ class BasketController extends AbstractController
         return $this->render('basket/order.html.twig', [
             'basket' => $basket
         ]);
+    }
+
+    #[Route('/delete-basket', name: 'app_delete_basket')]
+    public function delete(CartManager $cartManager, BasketRepository $basketRepository)
+    {
+        $basket = $cartManager->getCurrentBasket();
+        $basketRepository->remove($basket, true);
+
+        $this->addFlash('success', 'Кошик успішно видалено!');
+
+        return $this->redirectToRoute('app_basket');
     }
 }

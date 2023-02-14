@@ -110,25 +110,10 @@ class Basket
         }
 
         $this->items[] = $item;
-        $item->setTotal($item->getTotalPrice());
-        $item->setBasket($this);
-        $item
+        $item->setTotal($item->getTotalPrice())
+            ->setBasket($this)
             ->setProduct($item->getProduct())
             ->setPrice($item->getProduct()->getPrice());
-
-//        if ($total || $this->getItems()->contains($item)) {
-//            if ($total) {
-//                $item->setTotal($total);
-//            }
-//            if (!$total) {
-//                foreach ($this->getItems() as $existingItem) {
-//                    $existingItem->setTotalSum($this->getTotal());
-//                }
-//            }
-//            $item
-//                ->setTotal($item->getProduct()->getPrice() * $item->getQuantity())
-//                ->setProduct($item->getProduct());
-//        }
 
         return $this;
     }

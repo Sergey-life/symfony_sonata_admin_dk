@@ -74,19 +74,29 @@ class CartManager
     }
 
     /**
+     * Persists the cart in database and session.
+     *
+     * @param mixed $basket
+     */
+    public function delete($basket)
+    {
+        $this->entityManager->remove($basket);
+    }
+
+    /**
      * Creates an order.
      *
      * @param Basket
      */
-    public function createOrder($object)
+    public function createOrder($basket)
     {
         $newOrder = new Order();
         $newOrder
             ->setStatus(Order::STATUS_ORDER['new'])
-            ->setTotalSum($object->getTotal());
+            ->setTotalSum($basket->getTotal());
         $this->save($newOrder);
 
-        foreach ($object->getItems() as $item) {
+        foreach ($basket->getItems() as $item) {
             $order = new OrderItem();
             $order
                 ->setTotal($item->getTotal())
@@ -98,7 +108,7 @@ class CartManager
             $this->save($order);
         }
 
-        $object->setStatus(Basket::STATUS_BASKET['closed']);
-        $this->save($object);
+        $basket->setStatus(Basket::STATUS_BASKET['closed']);
+        $this->save($basket);
     }
 }
