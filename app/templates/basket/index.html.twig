@@ -13,16 +13,14 @@
                 <div class="col-md-4"></div>
             </div>
         {% else %}
-            <div class="alert alert-info">
-                Ваш кошик порожній. Перейти до <a href="{{ path('all.products') }}">списку продуктів</a>.
-            </div>
-
             {% for message in app.flashes('success') %}
                 <div class="alert alert-success">
                     {{ message }}
                 </div>
             {% endfor %}
-
+            <div class="alert alert-info">
+                Ваш кошик порожній. Перейти до <a href="{{ path('all.products') }}">списку продуктів</a>.
+            </div>
         {% endif %}
     </div>
 
@@ -32,10 +30,10 @@
             <div class="card-header bg-dark text-white d-flex">
                 <h5>Продукти</h5>
                 <div class="ml-auto">
-                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
-                    {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
                     {% if cart.items.count > 0 %}
-                        <a href="{{ path('app_delete_basket') }}" class="btn btn-danger">delete</a>
+                        {{ form_widget(form.save, {'attr': {'class': 'btn btn-warning'}}) }}
+                        {{ form_widget(form.clear, {'attr': {'class': 'btn btn-light'}}) }}
+                        <a href="{{ path('app_delete_basket') }}" class="btn btn-danger">Видалити</a>
                     {% endif %}
                 </div>
             </div>
