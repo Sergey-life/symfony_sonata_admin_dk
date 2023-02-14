@@ -14,39 +14,22 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Table(name: '`order`')]
 class Order
 {
-    /**
-     * An order that is in progress, not placed yet.
-     *
-     * @var string
-     */
-    const STATUS_CART = 'new';
-
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = self::STATUS_CART;
-
-    #[ORM\ManyToOne(inversedBy: 'orders')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Product $product = null;
+    private ?string $status = null;
 
     #[ORM\Column]
-    private ?float $sum = null;
-
-    #[ORM\Column]
-    private ?int $quantity = null;
-
-    #[ORM\Column]
-    private ?int $totalSum = null;
+    private ?float $totalSum = null;
 
     #[Gedmo\Timestampable(on:"update")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $orderDate = null;
 
-    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: BasketItem::class, cascade: ["persist", "remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'orderRef', targetEntity: OrderItem::class, orphanRemoval: true)]
     private Collection $items;
 
     public function __construct()
@@ -71,48 +54,12 @@ class Order
         return $this;
     }
 
-    public function getProduct(): ?Product
-    {
-        return $this->product;
-    }
-
-    public function setProduct(?Product $product): self
-    {
-        $this->product = $product;
-
-        return $this;
-    }
-
-    public function getSum(): ?float
-    {
-        return $this->sum;
-    }
-
-    public function setSum(float $sum): self
-    {
-        $this->sum = $sum;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): self
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getTotalSum(): ?int
+    public function getTotalSum(): ?float
     {
         return $this->totalSum;
     }
 
-    public function setTotalSum(int $totalSum): self
+    public function setTotalSum(float $totalSum): self
     {
         $this->totalSum = $totalSum;
 
@@ -132,14 +79,24 @@ class Order
     }
 
     /**
-     * @return Collection<int, BasketItem>
+     * @return Collection<int, OrderItem>
      */
     public function getItems(): Collection
     {
         return $this->items;
     }
 
-    public function removeItem(BasketItem $item): self
+    public function addItem(OrderItem $item): self
+    {
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
+            $item->setOrderRef($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(OrderItem $item): self
     {
         if ($this->items->removeElement($item)) {
             // set the owning side to null (unless already changed)
@@ -149,35 +106,5 @@ class Order
         }
 
         return $this;
-    }
-
-    /**
-     * Removes all items from the order.
-     *
-     * @return $this
-     */
-    public function removeItems(): self
-    {
-        foreach ($this->getItems() as $item) {
-            $this->removeItem($item);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Calculates the order total.
-     *
-     * @return float
-     */
-    public function getTotal(): float
-    {
-        $total = 0;
-
-        foreach ($this->getItems() as $item) {
-            $total += $item->getTotal();
-        }
-
-        return $total;
     }
 }

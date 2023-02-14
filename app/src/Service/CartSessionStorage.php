@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Basket;
-use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Repository\BasketRepository;
 use App\Repository\OrderRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -42,13 +42,11 @@ class CartSessionStorage
      * CartSessionStorage constructor.
      *
      * @param RequestStack $requestStack
-     * @param OrderRepository $cartRepository
      * @param BasketRepository $asketRepository
      */
-    public function __construct(RequestStack $requestStack, OrderRepository $cartRepository, BasketRepository $basketRepository)
+    public function __construct(RequestStack $requestStack, BasketRepository $basketRepository)
     {
         $this->requestStack = $requestStack;
-        $this->cartRepository = $cartRepository;
         $this->basketRepository = $basketRepository;
     }
 

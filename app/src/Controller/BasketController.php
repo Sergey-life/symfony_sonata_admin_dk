@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Basket;
-use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Form\CartType;
 use App\Repository\OrderRepository;
 use App\Service\CartManager;
@@ -43,9 +43,9 @@ class BasketController extends AbstractController
     {
         $basket = $cartManager->getCurrentBasket();
         foreach ($basket->getItems() as $item) {
-            $order = new Order();
+            $order = new OrderItem();
             $order->setProduct($item->getProduct())
-                ->setStatus(Order::STATUS_CART)
+                ->setStatus(OrderItem::STATUS_CART)
                 ->setSum($item->getSum())
                 ->setQuantity($item->getQuantity())
                 ->setTotalSum($item->getTotalSum());

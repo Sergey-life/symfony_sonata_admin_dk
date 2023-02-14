@@ -37,7 +37,7 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: BasketItem::class, orphanRemoval: true)]
     private Collection $basketItems;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Order::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class, orphanRemoval: true)]
     private Collection $orders;
 
     public function __construct()
@@ -142,14 +142,14 @@ class Product
     }
 
     /**
-     * @return Collection<int, Order>
+     * @return Collection<int, OrderItem>
      */
     public function getOrders(): Collection
     {
         return $this->orders;
     }
 
-    public function addOrder(Order $order): self
+    public function addOrder(OrderItem $order): self
     {
         if (!$this->orders->contains($order)) {
             $this->orders->add($order);
@@ -159,7 +159,7 @@ class Product
         return $this;
     }
 
-    public function removeOrder(Order $order): self
+    public function removeOrder(OrderItem $order): self
     {
         if ($this->orders->removeElement($order)) {
             // set the owning side to null (unless already changed)

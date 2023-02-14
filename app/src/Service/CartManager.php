@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Basket;
-use App\Entity\Order;
+use App\Entity\OrderItem;
 use App\Factory\OrderFactory;
 use App\Service\CartSessionStorage;
 use Doctrine\ORM\EntityManagerInterface;

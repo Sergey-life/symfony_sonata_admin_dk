@@ -93,7 +93,7 @@ class Basket
         return $this->items;
     }
 
-    public function addItem(BasketItem $item, $resetQuantity = true, $total = false): self
+    public function addItem(BasketItem $item, $resetQuantity = true): self
     {
         foreach ($this->getItems() as $existingItem) {
 //             The item already exists, update the quantity
@@ -101,8 +101,8 @@ class Basket
                 $existingItem->setQuantity(
                     $existingItem->getQuantity() + $item->getQuantity()
                 )
-                    ->setStatus(Order::STATUS_CART)
-                    ->setSum($item->getProduct()->getPrice() * $existingItem->getQuantity())
+                    ->setPrice($item->getProduct()->getPrice())
+                    ->setTotal($item->getProduct()->getPrice() * $existingItem->getQuantity())
                     ->setProduct($item->getProduct());
 
                 return $this;
@@ -110,21 +110,25 @@ class Basket
         }
 
         $this->items[] = $item;
+        $item->setTotal($item->getTotalPrice());
         $item->setBasket($this);
-        if ($total || $this->getItems()->contains($item)) {
-            if ($total) {
-                $item->setTotalSum($total);
-            }
-            if (!$total) {
-                foreach ($this->getItems() as $existingItem) {
-                    $existingItem->setTotalSum($this->getTotal());
-                }
-            }
-            $item
-                ->setStatus(Order::STATUS_CART)
-                ->setSum($item->getProduct()->getPrice() * $item->getQuantity())
-                ->setProduct($item->getProduct());
-        }
+        $item
+            ->setProduct($item->getProduct())
+            ->setPrice($item->getProduct()->getPrice());
+
+//        if ($total || $this->getItems()->contains($item)) {
+//            if ($total) {
+//                $item->setTotal($total);
+//            }
+//            if (!$total) {
+//                foreach ($this->getItems() as $existingItem) {
+//                    $existingItem->setTotalSum($this->getTotal());
+//                }
+//            }
+//            $item
+//                ->setTotal($item->getProduct()->getPrice() * $item->getQuantity())
+//                ->setProduct($item->getProduct());
+//        }
 
         return $this;
     }
