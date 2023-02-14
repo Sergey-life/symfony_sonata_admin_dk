@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Basket;
+use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Factory\OrderFactory;
 use App\Service\CartSessionStorage;
@@ -67,15 +68,37 @@ class CartManager
         $this->entityManager->persist($basket);
         $this->entityManager->flush();
         // Persist in session
-        $this->cartSessionStorage->setCart($basket);
+        if ($basket instanceof Basket) {
+            $this->cartSessionStorage->setCart($basket);
+        }
     }
 
-    public function saveBasket(Basket $basket): void
+    /**
+     * Creates an order.
+     *
+     * @param Basket
+     */
+    public function createOrder($object)
     {
-        // Persist in database
-        $this->entityManager->persist($basket);
-        $this->entityManager->flush();
-        // Persist in session
-//        $this->cartSessionStorage->setCart($basket);
+        $newOrder = new Order();
+        $newOrder
+            ->setStatus(Order::STATUS_ORDER['new'])
+            ->setTotalSum($object->getTotal());
+        $this->save($newOrder);
+
+        foreach ($object->getItems() as $item) {
+            $order = new OrderItem();
+            $order
+                ->setTotal($item->getTotal())
+                ->setPrice($item->getPrice())
+                ->setQuantity($item->getQuantity())
+                ->setProduct($item->getProduct())
+                ->setOrderRef($newOrder);
+
+            $this->save($order);
+        }
+
+        $object->setStatus(Basket::STATUS_BASKET['closed']);
+        $this->save($object);
     }
 }

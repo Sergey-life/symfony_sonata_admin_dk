@@ -23,9 +23,8 @@ class BasketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() /**&& $form->isValid()*/) {
-            $totalSum = $cart->getTotal();
             foreach ($cart->getItems() as $item) {
-                $cart->addItem($item, false, $totalSum);
+                $cart->addItem($item, false);
             }
             $cartManager->save($cart);
 
@@ -39,21 +38,10 @@ class BasketController extends AbstractController
     }
 
     #[Route('/order', name: 'app_make_order')]
-    public function makeOrder(CartManager $cartManager, OrderRepository $orderRepository): Response
+    public function makeOrder(CartManager $cartManager): Response
     {
         $basket = $cartManager->getCurrentBasket();
-        foreach ($basket->getItems() as $item) {
-            $order = new OrderItem();
-            $order->setProduct($item->getProduct())
-                ->setStatus(OrderItem::STATUS_CART)
-                ->setSum($item->getSum())
-                ->setQuantity($item->getQuantity())
-                ->setTotalSum($item->getTotalSum());
-            $orderRepository->save($order, true);
-        }
-
-        $basket->setStatus(Basket::STATUS_BASKET['closed']);
-        $cartManager->save($basket);
+        $cartManager->createOrder($basket);
 
         return $this->render('basket/order.html.twig', [
             'basket' => $basket

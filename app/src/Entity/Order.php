@@ -14,6 +14,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Table(name: '`order`')]
 class Order
 {
+    /**
+     * @var string
+     */
+    const STATUS_ORDER = [
+        'new' => 'new',
+        'closed' => 'closed'
+    ];
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

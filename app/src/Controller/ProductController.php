@@ -32,22 +32,12 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $basket = $cartManager->getCurrentBasket();
-//
-//            if (!$basket) {
-//                $cartManager->saveBasket($basket);
-//            }
 
             $item = $form->getData();
             $item->setProduct($product);
             $item->setBasket($basket);
 
-//            $basket = $cartManager->getCurrentBasket();
             $basket->addItem($item, true);
-
-//            $totalSum = $cart->getTotal();
-//            foreach ($cart->getItems() as $item) {
-//                $item->setTotalSum($totalSum);
-//            }
 
             $cartManager->save($basket);
 

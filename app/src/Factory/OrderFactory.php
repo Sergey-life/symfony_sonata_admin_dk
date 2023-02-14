@@ -4,6 +4,7 @@ namespace App\Factory;
 
 
 use App\Entity\Basket;
+use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\BasketItem;
 use App\Entity\Product;
@@ -31,14 +32,19 @@ class OrderFactory
 //    /**
 //     * Creates an order.
 //     *
-//     * @return OrderItem
+//     * @return Order
 //     */
-//    public function create(): OrderItem
+//    public function createOrder($orderItems): Order
 //    {
-//        $order = new OrderItem();
-//        $order
-//            ->setStatus(OrderItem::STATUS_CART)
-//            ->setOrderDate(new \DateTime());
+//        foreach ($orderItems as $item) {
+//            $order = new Order();
+//            $order
+//                ->setTotal($item->getTotal())
+//                ->setPrice($item->getPrice())
+//                ->setQuantity($item->getQuantity())
+//                ->setProduct($item->getProduct())
+//                ->setOrderRef($item->getId());
+//        }
 //
 //        return $order;
 //    }
