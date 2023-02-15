@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Basket;
+use App\Entity\BasketItem;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Factory\OrderFactory;
@@ -97,18 +98,43 @@ class CartManager
         $this->save($newOrder);
 
         foreach ($basket->getItems() as $item) {
-            $order = new OrderItem();
-            $order
+            $orderItem = new OrderItem();
+            $orderItem
                 ->setTotal($item->getTotal())
                 ->setPrice($item->getPrice())
                 ->setQuantity($item->getQuantity())
                 ->setProduct($item->getProduct())
                 ->setOrderRef($newOrder);
 
-            $this->save($order);
+            $this->save($orderItem);
         }
 
         $basket->setStatus(Basket::STATUS_BASKET['closed']);
         $this->save($basket);
+    }
+
+    public function addItem(BasketItem $item, $resetQuantity = true): self
+    {
+        foreach ($this->getCurrentBasket()->getItems() as $existingItem) {
+//             The item already exists, update the quantity
+            if ($existingItem->equals($item) && $resetQuantity) {
+                $existingItem->setQuantity(
+                    $existingItem->getQuantity() + $item->getQuantity()
+                )
+                    ->setPrice($item->getProduct()->getPrice())
+                    ->setTotal($item->getProduct()->getPrice() * $existingItem->getQuantity())
+                    ->setProduct($item->getProduct());
+
+                return $this;
+            }
+        }
+
+        $this->items[] = $item;
+        $item->setTotal($item->getTotalPrice())
+            ->setBasket($this->getCurrentBasket())
+            ->setProduct($item->getProduct())
+            ->setPrice($item->getProduct()->getPrice());
+
+        return $this;
     }
 }

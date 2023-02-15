@@ -20,33 +20,4 @@ class ProductController extends AbstractController
             'products' => $productRepository->findAll(),
         ]);
     }
-
-    #[Route('product/{id}', name: 'show.product')]
-    public function show(int $id, ProductRepository $productRepository, Request $request, CartManager $cartManager): Response
-    {
-        $form = $this->createForm(AddToBasketType::class);
-
-        $form->handleRequest($request);
-
-        $product = $productRepository->find($id);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $basket = $cartManager->getCurrentBasket();
-
-            $item = $form->getData();
-            $item->setProduct($product);
-            $item->setBasket($basket);
-
-            $basket->addItem($item, true);
-
-            $cartManager->save($basket);
-
-            return $this->redirectToRoute('app_basket');
-        }
-
-        return $this->renderForm('product/detail.html.twig', [
-            'product' => $productRepository->find($id),
-            'form' => $form
-        ]);
-    }
 }

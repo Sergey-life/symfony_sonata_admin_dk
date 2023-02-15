@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Basket;
 use App\Entity\OrderItem;
+use App\Form\AddToBasketType;
 use App\Form\CartType;
 use App\Repository\BasketRepository;
 use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
 use App\Service\CartManager;
 use FontLib\Table\Type\name;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,10 +26,14 @@ class BasketController extends AbstractController
         $form = $this->createForm(CartType::class, $cart);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() /**&& $form->isValid()*/) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            /*
+             * todo - Зробити методи для додавання та видалення продукту
+             */
             foreach ($cart->getItems() as $item) {
                 $cart->addItem($item, false);
             }
+
             $cartManager->save($cart);
 
             return $this->redirectToRoute('app_basket');
@@ -36,6 +42,35 @@ class BasketController extends AbstractController
         return $this->render('basket/index.html.twig', [
             'cart' => $cart,
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('product/{id}', name: 'show.product')]
+    public function show(int $id, ProductRepository $productRepository, Request $request, CartManager $cartManager): Response
+    {
+        $form = $this->createForm(AddToBasketType::class);
+
+        $form->handleRequest($request);
+
+        $product = $productRepository->find($id);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $basket = $cartManager->getCurrentBasket();
+
+            $item = $form->getData();
+            $item->setProduct($product);
+            $item->setBasket($basket);
+
+            $basket->addItem($item, true);
+
+            $cartManager->save($basket);
+
+            return $this->redirectToRoute('app_basket');
+        }
+
+        return $this->renderForm('product/detail.html.twig', [
+            'product' => $productRepository->find($id),
+            'form' => $form
         ]);
     }
 

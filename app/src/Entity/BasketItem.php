@@ -25,6 +25,7 @@ class BasketItem
     #[ORM\Column(type: 'integer')]
     #[Assert\NotBlank()]
     #[Assert\GreaterThanOrEqual(1)]
+    #[Assert\Negative()]
     private ?int $quantity = null;
 
     #[ORM\Column]

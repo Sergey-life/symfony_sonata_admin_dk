@@ -19,7 +19,8 @@ class CartType extends AbstractType
     {
         $builder
             ->add('items', CollectionType::class, [
-                'entry_type' => BasketItemType::class
+                'entry_type' => BasketItemType::class,
+                'entry_options' => [ 'label' => false ]
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Зберегти'
