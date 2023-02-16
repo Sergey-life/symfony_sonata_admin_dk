@@ -7,6 +7,7 @@ use App\Entity\BasketItem;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Factory\OrderFactory;
+use App\Repository\BasketItemRepository;
 use App\Service\CartSessionStorage;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,21 +27,26 @@ class CartManager
      * @var EntityManagerInterface
      */
     private $entityManager;
+
+    private $basketItemRepository;
     /**
      * CartManager constructor.
      *
      * @param CartSessionStorage $cartStorage
      * @param OrderFactory $orderFactory
      * @param EntityManagerInterface $entityManager
+     * @param BasketItemRepository $basketItemRepository
      */
     public function __construct(
         CartSessionStorage $cartStorage,
         OrderFactory $orderFactory,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        BasketItemRepository $basketItemRepository
     ) {
         $this->cartSessionStorage = $cartStorage;
         $this->cartFactory = $orderFactory;
         $this->entityManager = $entityManager;
+        $this->basketItemRepository = $basketItemRepository;
     }
 
     /**
@@ -113,28 +119,38 @@ class CartManager
         $this->save($basket);
     }
 
-    public function addItem(BasketItem $item, $resetQuantity = true): self
+    public function addItem($prodId, $quantity, $basket)
     {
-        foreach ($this->getCurrentBasket()->getItems() as $existingItem) {
-//             The item already exists, update the quantity
-            if ($existingItem->equals($item) && $resetQuantity) {
-                $existingItem->setQuantity(
-                    $existingItem->getQuantity() + $item->getQuantity()
-                )
-                    ->setPrice($item->getProduct()->getPrice())
-                    ->setTotal($item->getProduct()->getPrice() * $existingItem->getQuantity())
-                    ->setProduct($item->getProduct());
+        $basketItem = $this->basketItemRepository->findOneBy([
+            'product' => $prodId,
+            'basket' => $basket->getId()
+        ]);
+//        dd($basketItem->getQuantity() + $quantity, $basketItem->getPrice()*($basketItem->getQuantity() + $quantity));
+        $basketItem
+            ->setQuantity($basketItem->getQuantity() + $quantity)
+            ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
 
-                return $this;
-            }
-        }
-
-        $this->items[] = $item;
-        $item->setTotal($item->getTotalPrice())
-            ->setBasket($this->getCurrentBasket())
-            ->setProduct($item->getProduct())
-            ->setPrice($item->getProduct()->getPrice());
-
-        return $this;
+        $this->save($basketItem);
+//        foreach ($this->getCurrentBasket()->getItems() as $existingItem) {
+////             The item already exists, update the quantity
+//            if ($existingItem->equals($item) && $resetQuantity) {
+//                $existingItem->setQuantity(
+//                    $existingItem->getQuantity() + $item->getQuantity()
+//                )
+//                    ->setPrice($item->getProduct()->getPrice())
+//                    ->setTotal($item->getProduct()->getPrice() * $existingItem->getQuantity())
+//                    ->setProduct($item->getProduct());
+//
+//                return $this;
+//            }
+//        }
+//
+//        $this->items[] = $item;
+//        $item->setTotal($item->getTotalPrice())
+//            ->setBasket($this->getCurrentBasket())
+//            ->setProduct($item->getProduct())
+//            ->setPrice($item->getProduct()->getPrice());
+//
+//        return $this;
     }
 }

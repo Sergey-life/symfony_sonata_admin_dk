@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Basket;
+use App\Entity\BasketItem;
 use App\Entity\OrderItem;
 use App\Form\AddToBasketType;
+use App\Form\BasketItemType;
 use App\Form\CartType;
+use App\Repository\BasketItemRepository;
 use App\Repository\BasketRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
@@ -27,9 +30,6 @@ class BasketController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /*
-             * todo - Зробити методи для додавання та видалення продукту
-             */
             foreach ($cart->getItems() as $item) {
                 $cart->addItem($item, false);
             }
@@ -39,9 +39,9 @@ class BasketController extends AbstractController
             return $this->redirectToRoute('app_basket');
         }
 
-        return $this->render('basket/index.html.twig', [
+        return $this->renderForm('basket/index.html.twig', [
             'cart' => $cart,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -92,6 +92,16 @@ class BasketController extends AbstractController
         $basketRepository->remove($basket, true);
 
         $this->addFlash('success', 'Кошик успішно видалено!');
+
+        return $this->redirectToRoute('app_basket');
+    }
+
+    #[Route('/add-item/{prodId}/{quantity}', name: 'app_add_item')]
+    public function addItem(int $prodId, int $quantity, CartManager $cartManager): Response
+    {
+        $basket = $cartManager->getCurrentBasket();
+        $cartManager->addItem($prodId, $quantity, $basket);
+        $cartManager->save($basket);
 
         return $this->redirectToRoute('app_basket');
     }

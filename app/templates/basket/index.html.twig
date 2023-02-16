@@ -33,12 +33,16 @@
                                         <div class="form-inline mt-2">
                                             <div class="form-group mb-0 mr-2">
                                                 {{ form_widget(item.decr, {'attr': {'class': 'btn btn-danger btn-sm'}}) }}
-                                                {{ form_widget(item.quantity, {
-                                                    'attr': {
-                                                        'class': 'form-control form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
-                                                    }
-                                                }) }}
-                                                {{ form_widget(item.incr, {'attr': {'class': 'btn btn-success btn-sm'}}) }}
+                                                    {{ form_widget(item.quantity, {
+                                                        'attr': {
+                                                            'class': 'form-control form-control-sm js-quantity-'~ item.vars.data.product.id  ~ (item.quantity.vars.valid ? '' : 'is-invalid')
+                                                        }
+                                                    }) }}
+{#                                                {{ form_widget(item.incr, {'attr': {'class': 'btn btn-success btn-sm'}}) }}#}
+                                                <input type="hidden" name="prodId" class="js-prod-id" value="{{ item.vars.data.product.id }}">
+{#                                                <input type="hidden" name="quantity" value="{{ item.quantity}}">#}
+                                                <a  href="#" class="btn btn-success btn-sm js-add-item" id="{{ item.vars.data.product.id }}"> + </a>
+{#                                                <a href="{{ path('app_add_item', {id: item.vars.data.product.id}) }}" class="btn btn-success btn-sm"> + </a>#}
                                                 <div class="invalid-feedback">
                                                     {{ form_errors(item.quantity) }}
                                                 </div>
@@ -82,5 +86,17 @@
             </div>
         {% endif %}
     </div>
+
+    <script>
+        $(function () {
+            $('.js-add-item').click(function (e) {
+                let prodId = e.target.id
+                let quantity = $('.js-quantity-'+prodId).val();
+                let url = "{{ path('app_add_item', {'prodId': 'prodId', 'quantity': 'quantity' })}}";
+                url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity);
+                $(this).attr('href', url);
+            });
+        });
+    </script>
 
 {% endblock %}

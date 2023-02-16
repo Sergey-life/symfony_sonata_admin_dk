@@ -42,23 +42,23 @@ class RemoveCartItemListener implements EventSubscriberInterface
                 break;
             }
             // If clicked decr
-            if ($child->get('decr')->isClicked()) {
-                if ($child->getData()->getQuantity() > 1 ) {
-                    $child->getData()->setQuantity($child->getData()->getQuantity() - 1);
-                }
-                else
-                {
-                    $basket->removeItem($child->getData());
-                }
-                break;
-            }
+//            if ($child->get('decr')->isClicked()) {
+//                if ($child->getData()->getQuantity() > 1 ) {
+//                    $child->getData()->setQuantity($child->getData()->getQuantity() - 1);
+////                }
+//                else
+//                {
+//                    $basket->removeItem($child->getData());
+//                }
+//                break;
+//            }
             // If clicked incr
-            if ($child->get('incr')->isClicked()) {
-                if ($child->getData()->getQuantity() >= 1) {
-                    $child->getData()->setQuantity($child->getData()->getQuantity() + 1);
-                    break;
-                }
-            }
+//            if ($child->get('incr')->isClicked()) {
+//                if ($child->getData()->getQuantity() >= 1) {
+//                    $child->getData()->setQuantity($child->getData()->getQuantity() + 1);
+//                    break;
+//                }
+//            }
         }
     }
 }

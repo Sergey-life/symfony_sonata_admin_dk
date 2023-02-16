@@ -59,7 +59,7 @@ class CartSessionStorage
     public function getBasket(): ?Basket
     {
         return $this->basketRepository->findOneBy([
-            'id' => $this->getCartId(),
+            'id' => $this->getCartId() ? 20 : $this->getCartId(),
             'status' => Basket::STATUS_BASKET['open']
         ]);
     }
