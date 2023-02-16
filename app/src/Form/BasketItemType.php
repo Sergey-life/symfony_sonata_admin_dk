@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\PositiveOrZero;
 
 class BasketItemType extends AbstractType
 {
@@ -23,7 +24,8 @@ class BasketItemType extends AbstractType
             ->add('quantity', NumberType::class, [
                 'required' => true,
                 'constraints' => [
-                    new GreaterThanOrEqual(1)
+                    new GreaterThanOrEqual(1),
+                    new PositiveOrZero(),
                 ]
             ])
             ->add('remove', SubmitType::class)

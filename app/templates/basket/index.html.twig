@@ -35,7 +35,7 @@
                                                 {{ form_widget(item.decr, {'attr': {'class': 'btn btn-danger btn-sm'}}) }}
                                                     {{ form_widget(item.quantity, {
                                                         'attr': {
-                                                            'class': 'form-control form-control-sm js-quantity-'~ item.vars.data.product.id  ~ (item.quantity.vars.valid ? '' : 'is-invalid')
+                                                            'class': 'form-control form-control-sm js-quantity-' ~ item.vars.data.product.id ~ 'form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
                                                         }
                                                     }) }}
 {#                                                {{ form_widget(item.incr, {'attr': {'class': 'btn btn-success btn-sm'}}) }}#}
@@ -54,6 +54,11 @@
                                         <b>{{ item.vars.data.product.price }} €</b>
                                     </div>
                                 </li>
+                            {% endfor %}
+                            {% for error in app.flashes('error') %}
+                                <div class="form-control form-control-sm is-invalid">
+                                    {{ error }}
+                                </div>
                             {% endfor %}
                         </ul>
                     </div>
@@ -91,9 +96,10 @@
         $(function () {
             $('.js-add-item').click(function (e) {
                 let prodId = e.target.id
-                let quantity = $('.js-quantity-'+prodId).val();
+                // let quantity = $('.js-quantity-'+prodId).val();
+                let quantity = $(`input[class=js-quantity-${prodId}]`).val();
                 let url = "{{ path('app_add_item', {'prodId': 'prodId', 'quantity': 'quantity' })}}";
-                url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity);
+                url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity === undefined ? -1 : quantity);
                 $(this).attr('href', url);
             });
         });

@@ -18,6 +18,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class BasketController extends AbstractController
@@ -97,10 +100,23 @@ class BasketController extends AbstractController
     }
 
     #[Route('/add-item/{prodId}/{quantity}', name: 'app_add_item')]
-    public function addItem(int $prodId, int $quantity, CartManager $cartManager): Response
+    public function addItem(int $prodId, int $quantity, CartManager $cartManager, ValidatorInterface $validator): Response
     {
-        $cartManager->addItem($prodId, $quantity);
+        $quantityConstraint = new Assert\PositiveOrZero();
+        $errors = $validator->validate(
+            $quantity,
+            $quantityConstraint
+        );
 
-        return $this->redirectToRoute('app_basket');
+        if (!$errors->count()) {
+            $cartManager->addItem($prodId, $quantity);
+
+            return $this->redirectToRoute('app_basket');
+        } else {
+            $errorMessage = $errors[0]->getMessage();
+            $this->addFlash('error', $errorMessage);
+
+            return $this->redirectToRoute('app_basket');
+        }
     }
 }
