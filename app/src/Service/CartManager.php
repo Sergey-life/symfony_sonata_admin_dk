@@ -119,38 +119,18 @@ class CartManager
         $this->save($basket);
     }
 
-    public function addItem($prodId, $quantity, $basket)
+    public function addItem($prodId, $quantity)
     {
+        $basket = $this->getCurrentBasket();
         $basketItem = $this->basketItemRepository->findOneBy([
             'product' => $prodId,
             'basket' => $basket->getId()
         ]);
-//        dd($basketItem->getQuantity() + $quantity, $basketItem->getPrice()*($basketItem->getQuantity() + $quantity));
         $basketItem
             ->setQuantity($basketItem->getQuantity() + $quantity)
             ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
 
         $this->save($basketItem);
-//        foreach ($this->getCurrentBasket()->getItems() as $existingItem) {
-////             The item already exists, update the quantity
-//            if ($existingItem->equals($item) && $resetQuantity) {
-//                $existingItem->setQuantity(
-//                    $existingItem->getQuantity() + $item->getQuantity()
-//                )
-//                    ->setPrice($item->getProduct()->getPrice())
-//                    ->setTotal($item->getProduct()->getPrice() * $existingItem->getQuantity())
-//                    ->setProduct($item->getProduct());
-//
-//                return $this;
-//            }
-//        }
-//
-//        $this->items[] = $item;
-//        $item->setTotal($item->getTotalPrice())
-//            ->setBasket($this->getCurrentBasket())
-//            ->setProduct($item->getProduct())
-//            ->setPrice($item->getProduct()->getPrice());
-//
-//        return $this;
+        $this->save($basket);
     }
 }

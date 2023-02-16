@@ -99,9 +99,7 @@ class BasketController extends AbstractController
     #[Route('/add-item/{prodId}/{quantity}', name: 'app_add_item')]
     public function addItem(int $prodId, int $quantity, CartManager $cartManager): Response
     {
-        $basket = $cartManager->getCurrentBasket();
-        $cartManager->addItem($prodId, $quantity, $basket);
-        $cartManager->save($basket);
+        $cartManager->addItem($prodId, $quantity);
 
         return $this->redirectToRoute('app_basket');
     }
