@@ -119,4 +119,25 @@ class BasketController extends AbstractController
             return $this->redirectToRoute('app_basket');
         }
     }
+
+    #[Route('/add-remove/{prodId}/{quantity}', name: 'app_remove_item')]
+    public function removeItem(int $prodId, int $quantity, CartManager $cartManager, ValidatorInterface $validator): Response
+    {
+        $quantityConstraint = new Assert\GreaterThanOrEqual(1);
+        $errors = $validator->validate(
+            $quantity,
+            $quantityConstraint
+        );
+
+        if (!$errors->count()) {
+            $cartManager->removeItem($prodId, $quantity);
+
+            return $this->redirectToRoute('app_basket');
+        } else {
+            $errorMessage = $errors[0]->getMessage();
+            $this->addFlash('error', $errorMessage);
+
+            return $this->redirectToRoute('app_basket');
+        }
+    }
 }

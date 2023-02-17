@@ -30,10 +30,10 @@ class BasketItemType extends AbstractType
 //                    new PositiveOrZero(),
                 ]
             ])
-            ->add('remove', SubmitType::class)
-            ->add('decr', SubmitType::class, [
-                'label' => '-',
-            ]);
+            ->add('remove', SubmitType::class);
+//            ->add('decr', SubmitType::class, [
+//                'label' => '-',
+//            ]);
 //            ->add('incr', SubmitType::class, [
 //                'label' => '+',
 //            ]);

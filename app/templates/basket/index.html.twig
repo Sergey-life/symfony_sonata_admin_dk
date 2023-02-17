@@ -32,14 +32,15 @@
                                         <small>{{ item.vars.data.product.description[:50] }}...</small>
                                         <div class="form-inline mt-2">
                                             <div class="form-group mb-0 mr-2">
-                                                {{ form_widget(item.decr, {'attr': {'class': 'btn btn-danger btn-sm'}}) }}
+{#                                                {{ form_widget(item.decr, {'attr': {'class': 'btn btn-danger btn-sm'}}) }}#}
+                                                <a  href="#" class="btn btn-danger btn-sm js-remove-item" id="del_prod_{{ item.vars.data.product.id }}"> - </a>
                                                     {{ form_widget(item.quantity, {
                                                         'attr': {
                                                             'class': 'form-control form-control-sm js-quantity-' ~ item.vars.data.product.id ~ ' form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
                                                         }
                                                     }) }}
 {#                                                {{ form_widget(item.incr, {'attr': {'class': 'btn btn-success btn-sm'}}) }}#}
-                                                <input type="hidden" name="prodId" class="js-prod-id" value="{{ item.vars.data.product.id }}">
+{#                                                <input type="hidden" name="prodId" class="js-prod-id" value="{{ item.vars.data.product.id }}">#}
 {#                                                <input type="hidden" name="quantity" value="{{ item.quantity}}">#}
                                                 <a  href="#" class="btn btn-success btn-sm js-add-item" id="{{ item.vars.data.product.id }}"> + </a>
 {#                                                <a href="{{ path('app_add_item', {id: item.vars.data.product.id}) }}" class="btn btn-success btn-sm"> + </a>#}
@@ -94,11 +95,19 @@
 
     <script>
         $(function () {
+            //Add prod
             $('.js-add-item').click(function (e) {
-                let prodId = e.target.id
-                let input = $('.js-quantity-'+prodId);
-                let quantity = input.val();
+                let prodId = e.target.id;
+                let quantity = $('.js-quantity-'+prodId).val();
                 let url = "{{ path('app_add_item', {'prodId': 'prodId', 'quantity': 'quantity' })}}";
+                url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity === "" ? 1 : quantity);
+                $(this).attr('href', url);
+            });
+            //Remove prod
+            $('.js-remove-item').click(function (e) {
+                let prodId = e.target.id.replace('del_prod_', '');
+                let quantity = $('.js-quantity-'+prodId).val()
+                let url = "{{ path('app_remove_item', {'prodId': 'prodId', 'quantity': 'quantity' })}}";
                 url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity === "" ? 1 : quantity);
                 $(this).attr('href', url);
             });

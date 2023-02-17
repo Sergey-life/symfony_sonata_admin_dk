@@ -150,4 +150,36 @@ class CartManager
         $this->save($basketItem);
         $this->save($basket);
     }
+
+    public function removeItem($prodId, $quantity)
+    {
+        $basket = $this->getCurrentBasket();
+        $basketItem = $this->basketItemRepository->findOneBy([
+            'product' => $prodId,
+            'basket' => $basket->getId()
+        ]);
+        $currentQuantity = $basketItem->getQuantity();
+        if ($quantity == $currentQuantity) {
+            $basketItem
+                ->setQuantity($currentQuantity - 1)
+                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
+        }
+        if ($quantity > $currentQuantity) {
+            $basketItem
+                ->setQuantity($currentQuantity - $quantity)
+                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
+        }
+        if ($quantity < $currentQuantity) {
+            $basketItem
+                ->setQuantity($currentQuantity - $quantity)
+                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
+        }
+        if ($quantity == 0 || $quantity == 1 || $quantity >= $currentQuantity) {
+            $this->basketItemRepository->remove($basketItem, true);
+            return;
+        }
+
+        $this->save($basketItem);
+        $this->save($basket);
+    }
 }
