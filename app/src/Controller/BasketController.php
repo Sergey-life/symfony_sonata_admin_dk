@@ -102,7 +102,7 @@ class BasketController extends AbstractController
     #[Route('/add-item/{prodId}/{quantity}', name: 'app_add_item')]
     public function addItem(int $prodId, int $quantity, CartManager $cartManager, ValidatorInterface $validator): Response
     {
-        $quantityConstraint = new Assert\PositiveOrZero();
+        $quantityConstraint = new Assert\GreaterThanOrEqual(1);
         $errors = $validator->validate(
             $quantity,
             $quantityConstraint

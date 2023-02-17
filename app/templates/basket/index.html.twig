@@ -11,7 +11,7 @@
                 <div class="col-md-8">
                     {{ form_start(form) }}
                     <div class="card">
-                        <div class="card-header bg-dark text-white d-flex">
+                        <div class="card-header bg-dark text-white d-flex" style="background-color: #00a046 !important">
                             <h5>Продукти</h5>
                             <div class="ml-auto">
                                 {% if cart.items.count > 0 %}
@@ -21,7 +21,7 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush myTextbox">
                             {% for item in form.items %}
                                 <li class="list-group-item d-flex">
                                     <div class="flex-fill mr-2">
@@ -35,7 +35,7 @@
                                                 {{ form_widget(item.decr, {'attr': {'class': 'btn btn-danger btn-sm'}}) }}
                                                     {{ form_widget(item.quantity, {
                                                         'attr': {
-                                                            'class': 'form-control form-control-sm js-quantity-' ~ item.vars.data.product.id ~ 'form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
+                                                            'class': 'form-control form-control-sm js-quantity-' ~ item.vars.data.product.id ~ ' form-control-sm ' ~ (item.quantity.vars.valid ? '' : 'is-invalid')
                                                         }
                                                     }) }}
 {#                                                {{ form_widget(item.incr, {'attr': {'class': 'btn btn-success btn-sm'}}) }}#}
@@ -67,7 +67,7 @@
                 <!-- Summary -->
                 <div class="col-md-4">
                     <div class="card mt-4 mt-md-0">
-                        <h5 class="card-header bg-dark text-white">Сума замовлення</h5>
+                        <h5 class="card-header bg-dark text-white" style="background-color: #00a046 !important">Сума замовлення</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between">
                                 <div><b>Всього до сплати</b></div>
@@ -96,10 +96,10 @@
         $(function () {
             $('.js-add-item').click(function (e) {
                 let prodId = e.target.id
-                // let quantity = $('.js-quantity-'+prodId).val();
-                let quantity = $(`input[class=js-quantity-${prodId}]`).val();
+                let input = $('.js-quantity-'+prodId);
+                let quantity = input.val();
                 let url = "{{ path('app_add_item', {'prodId': 'prodId', 'quantity': 'quantity' })}}";
-                url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity === undefined ? -1 : quantity);
+                url = url.replace("prodId", parseInt(prodId)).replace("quantity", quantity === "" ? 1 : quantity);
                 $(this).attr('href', url);
             });
         });
