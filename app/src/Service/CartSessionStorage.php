@@ -36,7 +36,7 @@ class CartSessionStorage
     /**
      * @var string
      */
-    const CART_KEY_NAME = 'id';
+    const BASKET_KEY_NAME = 'id';
 
     /**
      * CartSessionStorage constructor.
@@ -59,7 +59,7 @@ class CartSessionStorage
     public function getBasket(): ?Basket
     {
         return $this->basketRepository->findOneBy([
-            'id' => $this->getCartId() ? $this->getCartId(): 20,
+            'id' => $this->getCartId(),
             'status' => Basket::STATUS_BASKET['open']
         ]);
     }
@@ -71,7 +71,7 @@ class CartSessionStorage
      */
     public function setCart(Basket $cart): void
     {
-        $this->getSession()->set(self::CART_KEY_NAME, $cart->getId());
+        $this->getSession()->set(self::BASKET_KEY_NAME, $cart->getId());
     }
 
     /**
@@ -81,7 +81,7 @@ class CartSessionStorage
      */
     private function getCartId(): ?int
     {
-        return $this->getSession()->get(self::CART_KEY_NAME);
+        return $this->getSession()->get(self::BASKET_KEY_NAME);
     }
 
     private function getSession(): SessionInterface
