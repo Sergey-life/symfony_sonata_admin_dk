@@ -6,6 +6,7 @@ use App\Entity\Basket;
 use App\Entity\BasketItem;
 use App\Entity\Order;
 use App\Entity\OrderItem;
+use App\Entity\Product;
 use App\Factory\OrderFactory;
 use App\Repository\BasketItemRepository;
 use App\Service\CartSessionStorage;
@@ -129,7 +130,7 @@ class CartManager
         $currentQuantity = $basketItem->getQuantity();
         if ($quantity == $currentQuantity) {
             $basketItem
-                ->setQuantity($currentQuantity + 1)
+                ->setQuantity($currentQuantity + Product::MIN_COUNT_PROD)
                 ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
         }
         if ($quantity > $currentQuantity) {
@@ -161,7 +162,7 @@ class CartManager
         $currentQuantity = $basketItem->getQuantity();
         if ($quantity == $currentQuantity) {
             $basketItem
-                ->setQuantity($currentQuantity - 1)
+                ->setQuantity($currentQuantity - Product::MIN_COUNT_PROD)
                 ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
         }
         if ($quantity > $currentQuantity) {
@@ -174,7 +175,7 @@ class CartManager
                 ->setQuantity($currentQuantity - $quantity)
                 ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
         }
-        if ($quantity == 0 || $quantity == 1 || $quantity >= $currentQuantity) {
+        if ($currentQuantity == Product::MIN_COUNT_PROD) {
             $this->basketItemRepository->remove($basketItem, true);
             return;
         }

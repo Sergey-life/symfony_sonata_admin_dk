@@ -12,6 +12,11 @@ use Gedmo\Mapping\Annotation as Gedmo;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
+    /**
+     * @var int
+     */
+    const MIN_COUNT_PROD = 1;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

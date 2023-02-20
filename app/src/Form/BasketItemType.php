@@ -31,12 +31,6 @@ class BasketItemType extends AbstractType
                 ]
             ])
             ->add('remove', SubmitType::class);
-//            ->add('decr', SubmitType::class, [
-//                'label' => '-',
-//            ]);
-//            ->add('incr', SubmitType::class, [
-//                'label' => '+',
-//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
