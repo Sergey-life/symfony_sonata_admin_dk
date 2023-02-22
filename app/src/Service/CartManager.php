@@ -128,24 +128,10 @@ class CartManager
             'basket' => $basket->getId()
         ]);
         $currentQuantity = $basketItem->getQuantity();
-        if ($quantity == $currentQuantity) {
-            $basketItem
-                ->setQuantity($currentQuantity + Product::MIN_COUNT_PROD)
-                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
-        if ($quantity > $currentQuantity) {
+        if ($quantity >= $currentQuantity || $quantity <= $currentQuantity) {
             $basketItem
                 ->setQuantity($currentQuantity + $quantity)
                 ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
-        if ($quantity < $currentQuantity) {
-            $basketItem
-                ->setQuantity($currentQuantity + $quantity)
-                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
-        if ($quantity == 0) {
-            $this->basketItemRepository->remove($basketItem, true);
-            return;
         }
 
         $this->save($basketItem);
@@ -160,22 +146,12 @@ class CartManager
             'basket' => $basket->getId()
         ]);
         $currentQuantity = $basketItem->getQuantity();
-        if ($quantity == $currentQuantity) {
-            $basketItem
-                ->setQuantity($currentQuantity - Product::MIN_COUNT_PROD)
-                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
-        if ($quantity > $currentQuantity) {
-            $basketItem
-                ->setQuantity($currentQuantity - $quantity)
-                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
         if ($quantity < $currentQuantity) {
             $basketItem
                 ->setQuantity($currentQuantity - $quantity)
                 ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
         }
-        if ($currentQuantity == Product::MIN_COUNT_PROD) {
+        if ($quantity == $currentQuantity) {
             $this->basketItemRepository->remove($basketItem, true);
             return;
         }

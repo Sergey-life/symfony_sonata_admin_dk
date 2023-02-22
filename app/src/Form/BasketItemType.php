@@ -30,7 +30,9 @@ class BasketItemType extends AbstractType
 //                    new PositiveOrZero(),
                 ]
             ])
-            ->add('remove', SubmitType::class);
+            ->add('remove', SubmitType::class, [
+                'label' => 'Видалити'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
