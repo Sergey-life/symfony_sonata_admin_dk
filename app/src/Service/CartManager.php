@@ -151,7 +151,7 @@ class CartManager
                 ->setQuantity($currentQuantity - $quantity)
                 ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
         }
-        if ($quantity == $currentQuantity) {
+        if ($quantity == $currentQuantity || $quantity > $currentQuantity) {
             $this->basketItemRepository->remove($basketItem, true);
             return;
         }
