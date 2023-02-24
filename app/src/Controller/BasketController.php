@@ -109,7 +109,9 @@ class BasketController extends AbstractController
         );
 
         if (!$errors->count()) {
-            $cartManager->addItem($prodId, $quantity);
+            $basket = $cartManager->getCurrentBasket();
+            $basket->addItem($cartManager->getItem($prodId), false, 'add', $quantity);
+            $cartManager->save($basket);
 
             return $this->redirectToRoute('app_basket');
         } else {
@@ -130,7 +132,9 @@ class BasketController extends AbstractController
         );
 
         if (!$errors->count()) {
-            $cartManager->removeItem($prodId, $quantity);
+            $basket = $cartManager->getCurrentBasket();
+            $basket->addItem($cartManager->getItem($prodId), false, 'remove', $quantity);
+            $cartManager->save($basket);
 
             return $this->redirectToRoute('app_basket');
         } else {

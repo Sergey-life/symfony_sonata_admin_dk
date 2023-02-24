@@ -93,11 +93,40 @@ class Basket
         return $this->items;
     }
 
-    public function addItem(BasketItem $item, $resetQuantity = true): self
+    public function addItem(
+        BasketItem $item,
+        bool $detailProduct = true,
+        string $action = null,
+        int $quantity = null
+    ): self
     {
         foreach ($this->getItems() as $existingItem) {
-//             The item already exists, update the quantity
-            if ($existingItem->equals($item) && $resetQuantity) {
+            $currentQuantity = $existingItem->getQuantity();
+//             We are increasing the amount of the product
+            if ($action == 'add' && $existingItem->equals($item)) {
+                if ($quantity >= $currentQuantity || $quantity <= $currentQuantity) {
+                    $existingItem
+                        ->setQuantity($currentQuantity + $quantity)
+                        ->setTotal($existingItem->getPrice() * $item->getQuantity());
+                }
+
+                return $this;
+            }
+//          We reduce the quantity or remove the product
+            if ($action == 'remove' && $existingItem->equals($item)) {
+                if ($quantity < $currentQuantity) {
+                    $existingItem
+                        ->setQuantity($currentQuantity - $quantity)
+                        ->setTotal($item->getPrice() * $item->getQuantity());
+                }
+                if ($quantity == $currentQuantity || $quantity > $currentQuantity) {
+                    $this->removeItem($existingItem);
+                }
+
+                return $this;
+            }
+//          If the product detail page and item already exists, update the quantity
+            if ($existingItem->equals($item) && $detailProduct) {
                 $existingItem->setQuantity(
                     $existingItem->getQuantity() + $item->getQuantity()
                 )
@@ -109,11 +138,14 @@ class Basket
             }
         }
 
-        $this->items[] = $item;
-        $item->setTotal($item->getTotalPrice())
+
+        $item
+            ->setTotal($item->getTotalPrice())
             ->setBasket($this)
             ->setProduct($item->getProduct())
             ->setPrice($item->getProduct()->getPrice());
+
+        $this->items[] = $item;
 
         return $this;
     }

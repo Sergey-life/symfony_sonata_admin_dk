@@ -120,43 +120,11 @@ class CartManager
         $this->save($basket);
     }
 
-    public function addItem($prodId, $quantity)
+    public function getItem($prodId)
     {
-        $basket = $this->getCurrentBasket();
-        $basketItem = $this->basketItemRepository->findOneBy([
+        return $this->basketItemRepository->findOneBy([
             'product' => $prodId,
-            'basket' => $basket->getId()
+            'basket' => $this->getCurrentBasket()->getId()
         ]);
-        $currentQuantity = $basketItem->getQuantity();
-        if ($quantity >= $currentQuantity || $quantity <= $currentQuantity) {
-            $basketItem
-                ->setQuantity($currentQuantity + $quantity)
-                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
-
-        $this->save($basketItem);
-        $this->save($basket);
-    }
-
-    public function removeItem($prodId, $quantity)
-    {
-        $basket = $this->getCurrentBasket();
-        $basketItem = $this->basketItemRepository->findOneBy([
-            'product' => $prodId,
-            'basket' => $basket->getId()
-        ]);
-        $currentQuantity = $basketItem->getQuantity();
-        if ($quantity < $currentQuantity) {
-            $basketItem
-                ->setQuantity($currentQuantity - $quantity)
-                ->setTotal($basketItem->getPrice() * $basketItem->getQuantity());
-        }
-        if ($quantity == $currentQuantity || $quantity > $currentQuantity) {
-            $this->basketItemRepository->remove($basketItem, true);
-            return;
-        }
-
-        $this->save($basketItem);
-        $this->save($basket);
     }
 }
