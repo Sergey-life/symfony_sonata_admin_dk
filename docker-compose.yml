@@ -76,3 +76,12 @@ services:
       - mailhog
     networks:
       - Symfony
+
+  cron:
+    container_name: cron
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - .:/var/www/html
+      - ./volumes/cron:/var/log/cron

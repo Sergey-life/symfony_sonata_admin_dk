@@ -8,15 +8,20 @@ imports:
 parameters:
     images_directory: '%kernel.project_dir%/public/images/'
     pdf_directory: '%kernel.project_dir%/public/pdf/'
+    product_directory: '%kernel.project_dir%/public/files/product/'
     locale: uk
 services:
     App\Admin\PostAdmin:
         arguments:
             $imagesDirectory: '%images_directory%'
+
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $productDirectory: '%product_directory%'
+
 
     # Admin
     admin.category:
