@@ -2,28 +2,31 @@
 
 namespace App\Service;
 
-use App\Entity\Category;
+use App\Entity\CategoryProduct;
+use App\Repository\CategoryProductRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\ProductRepository;
+
 
 class ProductProvider
 {
     private $productDirectory;
-    private $categoryRepository;
+    private $categoryProductRepository;
 
-    public function __construct($productDirectory ,CategoryRepository $categoryRepository)
+    public function __construct($productDirectory, CategoryProductRepository $categoryProductRepository)
     {
         $this->productDirectory = $productDirectory;
-        $this->categoryRepository = $categoryRepository;
+        $this->categoryProductRepository = $categoryProductRepository;
     }
 
     public function getCategories()
     {
-        $categories = json_decode($this->getFileJson('categories.json'), true);
-        foreach ($categories as $item) {
-            $category = new Category();
-            $category->setName($item['name']);
-            $this->categoryRepository->save($category, true);
+        $categoriesFromFile = json_decode($this->getFileJson('categories.json'), true);
+        foreach ($categoriesFromFile as $item) {
+            $category = new CategoryProduct();
+            if (!$this->categoryProductRepository->findOneBy(['name' => $item['name']])) {
+                $category->setName($item['name']);
+                $this->categoryProductRepository->save($category, true);
+            }
         }
     }
 

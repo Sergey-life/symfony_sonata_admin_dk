@@ -13,20 +13,30 @@ use Symfony\Component\Console\Output\OutputInterface;
     name: 'app:create-category',
     description: 'Creates a new category.',
     hidden: false,
-    aliases: ['app:create-category']
+    aliases: ['app:create:category']
 )]
 class CreateCategoryCommand extends Command
 {
     private $productProvider;
-    protected static $defaultName = 'app:create-category';
+
+    protected static $defaultName = 'app:create:category';
 
     public function __construct(ProductProvider $productProvider)
     {
         $this->productProvider = $productProvider;
         parent::__construct();
     }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function configure(): void
+    {
+        $this
+            // the command help shown when running the command with the "--help" option
+            ->setHelp('This command allows you to create a user...')
+        ;
+    }
+    /*
+     * @return int
+     */
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->productProvider->getCategories();
 

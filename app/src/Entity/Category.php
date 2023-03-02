@@ -106,4 +106,16 @@ class Category
 
         return $this;
     }
+
+    /**
+     * Tests if the given item given corresponds to the same order item.
+     *
+     * @param Category $item
+     *
+     * @return bool
+     */
+    public function equals(Category $item): bool
+    {
+        return $this->getId() === $item->getId();
+    }
 }

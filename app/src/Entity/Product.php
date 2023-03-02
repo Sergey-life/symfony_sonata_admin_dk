@@ -45,9 +45,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class, orphanRemoval: true)]
     private Collection $orders;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Category $category = null;
+    private ?CategoryProduct $category = null;
 
     public function __construct()
     {
@@ -180,15 +180,15 @@ class Product
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getCategory(): ?CategoryProduct
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    public function setCategory(?CategoryProduct $category): self
     {
         $this->category = $category;
 
         return $this;
     }
-}
+    }
