@@ -51,16 +51,21 @@ class UpdateProductCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         foreach ($this->productProvider->getProducts() as $item) {
-            $product = new Product();
             if (!$this->productRepository->findOneBy(['code' => $item['code']])) {
-                $product
-                    ->setName($item['name'])
-                    ->setDescription($item['description'])
-                    ->setPrice($item['price'])
-                    ->setCode($item['code'])
-                    ->setCategory($this->categoryProductRepository->findOneBy(['name' => $item['category']]));
-                $this->productRepository->save($product, true);
+                $product = new Product();
             }
+            else
+            {
+                $product = $this->productRepository->findOneBy(['code' => $item['code']]);
+            }
+            $product
+                ->setName($item['name'])
+                ->setDescription($item['description'])
+                ->setPrice($item['price'])
+                ->setCode($item['code'])
+                ->setCategory($this->categoryProductRepository->findOneBy(['name' => $item['category']]));
+
+            $this->productProvider->save($product);
         }
 
         return Command::SUCCESS;

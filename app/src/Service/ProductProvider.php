@@ -3,12 +3,27 @@
 namespace App\Service;
 
 
+use App\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
+
+
 class ProductProvider
 {
     private $productDirectory;
 
-    public function __construct($productDirectory)
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * ProductProvider constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param $productDirectory
+     */
+    public function __construct($productDirectory, EntityManagerInterface $entityManager)
     {
+        $this->entityManager = $entityManager;
         $this->productDirectory = $productDirectory;
     }
 
@@ -29,5 +44,16 @@ class ProductProvider
     private function getFileJson(string $file)
     {
         return file_get_contents($this->productDirectory.$file);
+    }
+
+    /**
+     * @param Product
+     */
+    public function save(Product $product): void
+    {
+        // Persist in database
+        $this->entityManager->persist($product);
+        $this->entityManager->flush();
+
     }
 }
