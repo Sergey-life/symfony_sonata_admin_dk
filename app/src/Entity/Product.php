@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints\Unique;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -48,6 +49,10 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CategoryProduct $category = null;
+
+    #[ORM\Column]
+    #[Unique]
+    private ?int $code = null;
 
     public function __construct()
     {
@@ -188,6 +193,18 @@ class Product
     public function setCategory(?CategoryProduct $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    public function setCode(int $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

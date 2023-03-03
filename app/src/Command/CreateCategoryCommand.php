@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\CategoryProduct;
+use App\Repository\CategoryProductRepository;
 use App\Service\ProductProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,10 +21,13 @@ class CreateCategoryCommand extends Command
 {
     private $productProvider;
 
+    private $categoryProductRepository;
+
     protected static $defaultName = 'app:create:category';
 
-    public function __construct(ProductProvider $productProvider)
+    public function __construct(ProductProvider $productProvider, CategoryProductRepository $categoryProductRepository)
     {
+        $this->categoryProductRepository = $categoryProductRepository;
         $this->productProvider = $productProvider;
         parent::__construct();
     }
@@ -30,7 +35,7 @@ class CreateCategoryCommand extends Command
     {
         $this
             // the command help shown when running the command with the "--help" option
-            ->setHelp('This command allows you to create a user...')
+            ->setHelp('This command allows you to create and update a category...')
         ;
     }
     /*
@@ -38,7 +43,13 @@ class CreateCategoryCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->productProvider->getCategories();
+        foreach ($this->productProvider->getCategories() as $item) {
+            $category = new CategoryProduct();
+            if (!$this->categoryProductRepository->findOneBy(['name' => $item['name']])) {
+                $category->setName($item['name']);
+                $this->categoryProductRepository->save($category, true);
+            }
+        }
 
         return Command::SUCCESS;
     }
