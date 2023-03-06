@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BasketController!{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="container">
+            <div class="col-md-12">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <a href="{{ path('all.products') }}">Повернутись до списку товарів</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

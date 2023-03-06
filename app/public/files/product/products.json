@@ -1,6 +1,6 @@
 {
-  "Комп'ютер Artline Gaming X51 v07": {
-    "name": "Комп'ютер Artline Gaming X51 v07",
+  "Комп'ютер Artline Gaming X51": {
+    "name": "Комп'ютер Artline Gaming X51",
     "price": 28199,
     "description": "Персональні комп'ютери серії Artline Gaming — це комп'ютери для тих, хто любить і хоче відпочивати! ",
     "category": "Комп'ютери та ноутбуки",
@@ -27,32 +27,18 @@
     "category": "Побутова техніка",
     "code": 898
   },
+  "test": {
+    "name": "test",
+    "price": 83887,
+    "description": "test",
+    "category": "test",
+    "code": 895
+  },
   "test2": {
     "name": "test2",
     "price": 83887,
     "description": "test2",
-    "category": "test",
-    "code": 899
-  },
-  "test3": {
-    "name": "test3",
-    "price": 83887,
-    "description": "test3",
-    "category": "Побутова техніка",
-    "code": 843
-  },
-  "test4": {
-    "name": "test4",
-    "price": 83889,
-    "description": "test4",
-    "category": "Побутова техніка",
-    "code": 822
-  },
-  "test5": {
-    "name": "test5",
-    "price": 83887,
-    "description": "test5",
-    "category": "Побутова техніка",
-    "code": 827
+    "category": "test2",
+    "code": 894
   }
 }

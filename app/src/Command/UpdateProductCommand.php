@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Entity\Product;
 use App\Repository\CategoryProductRepository;
 use App\Repository\ProductRepository;
-use App\Service\ProductProvider;
+use App\Service\JsonProductProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,23 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class UpdateProductCommand extends Command
 {
-    private $productProvider;
-
-    private $productRepository;
-
-    private $categoryProductRepository;
+    private $jsonProductProvider;
 
     protected static $defaultName = 'app:update:product';
 
-    public function __construct(
-        ProductProvider $productProvider,
-        ProductRepository $productRepository,
-        CategoryProductRepository $categoryProductRepository
-    )
+    public function __construct(JsonProductProvider $jsonProductProvider)
     {
-        $this->categoryProductRepository = $categoryProductRepository;
-        $this->productRepository = $productRepository;
-        $this->productProvider = $productProvider;
+        $this->jsonProductProvider = $jsonProductProvider;
         parent::__construct();
     }
     protected function configure(): void
@@ -47,23 +37,7 @@ class UpdateProductCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        foreach ($this->productProvider->getProducts() as $item) {
-            if (!$this->productRepository->findOneBy(['code' => $item['code']])) {
-                $product = new Product();
-            }
-            else
-            {
-                $product = $this->productRepository->findOneBy(['code' => $item['code']]);
-            }
-            $product
-                ->setName($item['name'])
-                ->setDescription($item['description'])
-                ->setPrice($item['price'])
-                ->setCode($item['code'])
-                ->setCategory($this->categoryProductRepository->findOneBy(['name' => $item['category']]));
-
-            $this->productProvider->save($product);
-        }
+        $this->jsonProductProvider->updateProdsAndCats();
 
         return Command::SUCCESS;
     }

@@ -4,7 +4,7 @@ namespace App\Command;
 
 use App\Entity\CategoryProduct;
 use App\Repository\CategoryProductRepository;
-use App\Service\ProductProvider;
+use App\Service\JsonProductProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,7 +25,7 @@ class CreateCategoryCommand extends Command
 
     protected static $defaultName = 'app:create:category';
 
-    public function __construct(ProductProvider $productProvider, CategoryProductRepository $categoryProductRepository)
+    public function __construct(JsonProductProvider $productProvider, CategoryProductRepository $categoryProductRepository)
     {
         $this->categoryProductRepository = $categoryProductRepository;
         $this->productProvider = $productProvider;
