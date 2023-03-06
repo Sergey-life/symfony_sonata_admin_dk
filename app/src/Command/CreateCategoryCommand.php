@@ -33,10 +33,7 @@ class CreateCategoryCommand extends Command
     }
     protected function configure(): void
     {
-        $this
-            // the command help shown when running the command with the "--help" option
-            ->setHelp('This command allows you to create and update a category...')
-        ;
+        $this->setHelp('This command allows you to create a category...');
     }
     /*
      * @return int

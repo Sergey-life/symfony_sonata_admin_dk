@@ -138,7 +138,6 @@ class Basket
             }
         }
 
-
         $item
             ->setTotal($item->getTotalPrice())
             ->setBasket($this)

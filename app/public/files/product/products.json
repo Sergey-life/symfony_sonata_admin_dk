@@ -3,7 +3,7 @@
     "name": "Комп'ютер Artline Gaming X51 v07",
     "price": 28199,
     "description": "Персональні комп'ютери серії Artline Gaming — це комп'ютери для тих, хто любить і хоче відпочивати! ",
-    "category": "Смартфони, ТВ і Електроніка",
+    "category": "Комп'ютери та ноутбуки",
     "code": 273
   },
   "Мобільний телефон Apple iPhone 13 128GB Starlight": {
@@ -41,10 +41,17 @@
     "category": "Побутова техніка",
     "code": 843
   },
+  "test4": {
+    "name": "test4",
+    "price": 83889,
+    "description": "test4",
+    "category": "Побутова техніка",
+    "code": 822
+  },
   "test5": {
     "name": "test5",
     "price": 83887,
-    "description": "test4",
+    "description": "test5",
     "category": "Побутова техніка",
     "code": 827
   }

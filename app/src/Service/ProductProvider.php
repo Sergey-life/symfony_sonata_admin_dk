@@ -7,7 +7,7 @@ use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 
 
-class ProductProvider
+class ProductProvider implements ProductProviderInterface
 {
     private $productDirectory;
 
@@ -46,6 +46,12 @@ class ProductProvider
         return file_get_contents($this->productDirectory.$file);
     }
 
+    public function updateProdsAndCats()
+    {
+        /**
+         * @todo перенести функціонал з консольної команди в цей сервіс
+         */
+    }
     /**
      * @param Product
      */
