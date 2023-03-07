@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Product;
 use App\Repository\CategoryProductRepository;
 use App\Repository\ProductRepository;
+use App\Service\ImportProduct;
 use App\Service\JsonProductProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,25 +20,38 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class UpdateProductCommand extends Command
 {
-    private $jsonProductProvider;
+    /**
+     * @var ImportProduct
+     */
+    private $importProduct;
 
+    /**
+     * @var string
+     */
     protected static $defaultName = 'app:update:product';
 
-    public function __construct(JsonProductProvider $jsonProductProvider)
+    /**
+     * @param ImportProduct $importProduct
+     */
+    public function __construct(ImportProduct $importProduct)
     {
-        $this->jsonProductProvider = $jsonProductProvider;
+        $this->importProduct = $importProduct;
         parent::__construct();
     }
+
     protected function configure(): void
     {
         $this->setHelp('This command allows you to create a user...');
     }
-    /*
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
      * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->jsonProductProvider->updateProdsAndCats();
+        $this->importProduct->updateProdsAndCats();
 
         return Command::SUCCESS;
     }
