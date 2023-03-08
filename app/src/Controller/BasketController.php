@@ -71,8 +71,12 @@ class BasketController extends AbstractController
             return $this->redirectToRoute('app_basket');
         }
 
+        foreach ($product->getStores() as $store) {
+            dump($store->getStore()->getAddress());
+        }
+
         return $this->renderForm('product/detail.html.twig', [
-            'product' => $productRepository->find($id),
+            'product' => $product,
             'form' => $form
         ]);
     }

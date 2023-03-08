@@ -54,10 +54,14 @@ class Product
     #[Unique]
     private ?int $code = null;
 
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: StoreProduct::class, cascade: ["persist", "remove"], orphanRemoval: true)]
+    private Collection $stores;
+
     public function __construct()
     {
         $this->basketItems = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->stores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -208,4 +212,35 @@ class Product
 
         return $this;
     }
+
+
+    /**
+     * @return Collection<int, StoreProduct>
+     */
+    public function getStores(): Collection
+    {
+        return $this->stores;
     }
+
+    public function addStore(StoreProduct $store): self
+    {
+        if (!$this->stores->contains($store)) {
+            $this->stores->add($store);
+            $store->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStore(StoreProduct $store): self
+    {
+        if ($this->stores->removeElement($store)) {
+            // set the owning side to null (unless already changed)
+            if ($store->getStore() === $this) {
+                $store->setStore(null);
+            }
+        }
+
+        return $this;
+    }
+}
