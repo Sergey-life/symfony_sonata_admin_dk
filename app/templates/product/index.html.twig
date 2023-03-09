@@ -5,7 +5,8 @@
 {% block body %}
     <div class="container">
         <h1 class="mt-3 mb-4">Products</h1>
-        <a href="{{ path('update.prods.and.cats') }}" class="btn btn-danger mt-3 mb-4">Оновити продукти та категорії</a>
+        <a href="{{ path('update.prods.and.cats') }}" class="btn btn-success mt-3 mb-4">Оновити продукти та категорії</a>
+        <a href="{{ path('update.prod.price') }}" class="btn btn-danger mt-3 mb-4">Оновити ціну на продукти</a>
         <div class="row">
             {% for product in products %}
                 <div class="col-md-4">

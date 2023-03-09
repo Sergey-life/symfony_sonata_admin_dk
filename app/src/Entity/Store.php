@@ -51,7 +51,7 @@ class Store
         return $this->products;
     }
 
-    public function addProduct(StoreProduct $product): self
+    public function addStore(StoreProduct $product): self
     {
         if (!$this->products->contains($product)) {
             $this->products->add($product);
@@ -61,12 +61,12 @@ class Store
         return $this;
     }
 
-    public function removeProduct(StoreProduct $store): self
+    public function removeStore(StoreProduct $store): self
     {
         if ($this->products->removeElement($store)) {
             // set the owning side to null (unless already changed)
-            if ($store->getProduct() === $this) {
-                $store->setProduct(null);
+            if ($store->getStore() === $this) {
+                $store->setStore(null);
             }
         }
 

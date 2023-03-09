@@ -222,22 +222,22 @@ class Product
         return $this->stores;
     }
 
-    public function addStore(StoreProduct $store): self
+    public function addProduct(StoreProduct $product): self
     {
-        if (!$this->stores->contains($store)) {
-            $this->stores->add($store);
-            $store->setProduct($this);
+        if (!$this->stores->contains($product)) {
+            $this->stores->add($product);
+            $product->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeStore(StoreProduct $store): self
+    public function removeProduct(StoreProduct $product): self
     {
-        if ($this->stores->removeElement($store)) {
+        if ($this->stores->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($store->getStore() === $this) {
-                $store->setStore(null);
+            if ($product->getProduct() === $this) {
+                $product->setProduct(null);
             }
         }
 

@@ -19,7 +19,7 @@ class JsonPriceProvider implements PriceProviderInterface
 
     public function getPrices()
     {
-        $prices = json_decode($this->jsonProductProvider->getFileJson('prices.json'), true);
+        $prices = json_decode($this->jsonProductProvider->getFileJson('price.json'), true);
 
         return $prices;
     }
