@@ -9,6 +9,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class JsonProductProvider implements ProductProviderInterface
 {
+    /**
+     * @var string
+     */
     private $productDirectory;
 
     /**
@@ -44,7 +47,7 @@ class JsonProductProvider implements ProductProviderInterface
         return $products;
     }
 
-    private function getFileJson(string $file)
+    public function getFileJson(string $file)
     {
         return file_get_contents($this->productDirectory.$file);
     }

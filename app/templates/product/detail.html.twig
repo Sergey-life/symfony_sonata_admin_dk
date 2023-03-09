@@ -29,5 +29,43 @@
                 {{ form_end(form) }}
             </div>
         </div>
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Код</th>
+                    <th scope="col">Продукт</th>
+                    <th scope="col">Категорія</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ product.code }}</th>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.category.name }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if product.stores.count > 0 %}
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Магазин</th>
+                        <th scope="col">Ціна продукта в магазині</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for storeProduct in product.stores %}
+                        <tr>
+                            <th scope="row">{{ storeProduct.store.address }}</th>
+                            <td>{{ storeProduct.price }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
