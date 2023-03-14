@@ -18,11 +18,11 @@ class StoreProduct
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'stores')]
+    #[ORM\ManyToOne(inversedBy: 'products', targetEntity: Store::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Store $store = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\ManyToOne(inversedBy: 'stores', targetEntity: Product::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 

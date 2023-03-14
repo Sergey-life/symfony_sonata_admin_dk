@@ -46,12 +46,15 @@ class ImportProduct
     public function updateProdsAndCats()
     {
         foreach ($this->jsonProductProvider->getProducts() as $item) {
-            if (!$this->categoryProductRepository->findOneBy(['name' => $item['category']])) {
+            $category = $this->categoryProductRepository->findOneBy(['name' => $item['category']]);
+            $product = $this->productRepository->findOneBy(['code' => $item['code']]);
+
+            if (!$category) {
                 $category = new CategoryProduct();
                 $category->setName($item['category']);
                 $this->categoryProductRepository->save($category, true);
             }
-            if (!$this->productRepository->findOneBy(['code' => $item['code']])) {
+            if (!$product) {
                 $product = new Product();
             }
             else
@@ -63,7 +66,7 @@ class ImportProduct
                 ->setDescription($item['description'])
                 ->setPrice($item['price'])
                 ->setCode($item['code'])
-                ->setCategory($this->categoryProductRepository->findOneBy(['name' => $item['category']]));
+                ->setCategory($category);
 
             $this->jsonProductProvider->save($product);
         }
