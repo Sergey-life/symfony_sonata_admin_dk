@@ -72,12 +72,12 @@ class ImportPrice
             $store = $this->storeRepository->findOneBy(['id' => $price['store_id']]);
             $product = $this->productRepository->findOneBy(['id' => $price['product_id']]);
 
-            if (!$store || !$product) {
-                $this->logger->error(
-                    'Такого продукту з id: ' .
-                    $price['product_id'] . ' або магазину з id: ' .
-                    $price['store_id'] . ' неіснує!'
-                );
+            if (!$store) {
+                $this->logger->info("Магазину з id: {$price['store_id']} неіснує!");
+                continue;
+            }
+            if (!$product) {
+                $this->logger->info("Продукту з id: {$price['product_id']} неіснує!");
                 continue;
             }
             $storeProduct = $this->storeProductRepository->findOneBy([
