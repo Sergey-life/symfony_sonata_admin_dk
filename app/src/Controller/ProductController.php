@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ProductRepository;
 use App\Service\ImportPrice;
-use App\Service\ImportProduct;
+use App\Service\ProductImporter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,13 +24,13 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @param ImportProduct $importProduct
+     * @param ProductImporter $productImporter
      * @return Response
      */
     #[Route('/update-prods-and-cats', name: 'update.prods.and.cats')]
-    public function updateProdsAndCats(ImportProduct $importProduct): Response
+    public function updateProdsAndCats(ProductImporter $productImporter): Response
     {
-        $importProduct->updateProdsAndCats();
+        $productImporter->updateProdsAndCats();
         $this->addFlash('success', 'Товари та категорії успішно оновлено!');
 
         return $this->render('product/update_prods_and_cats.html.twig');

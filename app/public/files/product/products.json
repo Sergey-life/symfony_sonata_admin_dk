@@ -1,51 +1,82 @@
-{
-  "Комп'ютер Artline Gaming X51": {
+[
+  {
     "name": "Комп'ютер Artline Gaming X51",
     "price": 28199,
     "description": "Персональні комп'ютери серії Artline Gaming — це комп'ютери для тих, хто любить і хоче відпочивати! ",
-    "category": "Комп'ютери та ноутбуки",
-    "code": 273
+    "code": 273,
+    "category": {
+      "id": 1,
+      "name": "Комп'ютери та ноутбуки"
+    }
   },
-  "Мобільний телефон Apple iPhone 13 128GB Starlight": {
+  {
     "name": "Мобільний телефон Apple iPhone 13 128GB Starlight",
     "price": 32999,
     "description": "Передова система двох камер 12 Мп: ширококутна й надширококутна; Стилі фотографій, режим Smart HDR 4, Нічний режим, зйомка HDR-відео 4K у стандарті Dolby Vision",
-    "category": "Смартфони, ТВ і Електроніка",
-    "code": 472
+    "code": 472,
+    "category": {
+      "id": 2,
+      "name": "Смартфони, ТВ і Електроніка"
+    }
   },
-  "Ноутбук Lenovo IdeaPad Gaming 3 15IHU6": {
+  {
     "name": "Ноутбук Lenovo IdeaPad Gaming 3 15IHU6",
     "price": 29999,
     "description": "Новітня відеокарта NVIDIA GeForce RTX серії 30 і продуктивний процесор Intel Core 11-го покоління, встановлений у максимальній конфігурації цього ноутбука, подбають, щоб твій ігровий потенціал сягнув нового рівня.",
-    "category": "Товари для геймерів",
-    "code": 580
+    "code": 580,
+    "category": {
+      "id": 3,
+      "name": "Товари для геймерів"
+    }
   },
-  "Пральна машина Samsung": {
+  {
     "name": "Пральна машина Samsung",
     "price": 12999,
     "description": "солоджуйтеся підвищеною енергоефективністю, зниженим рівнем шуму та тривалістю роботи. У технології цифрового інвертора використовують сильні магніти, що збільшують потужність. Але такий пристрій працює тихше й споживає менше енергії, ніж універсальний електродвигун. На нього також надають 10-річну гарантію.",
-    "category": "Побутова техніка",
+    "category": {
+      "id": 4,
+      "name": "Побутова техніка"
+    },
     "code": 898
   },
-  "test": {
+  {
     "name": "test",
     "price": 83887,
     "description": "test",
-    "category": "test",
+    "category": {
+      "id": 10,
+      "name": "test2"
+    },
     "code": 895
   },
-  "test2": {
+  {
     "name": "test2",
     "price": 83887,
     "description": "test2",
-    "category": "test2",
+    "category": {
+      "id": 10,
+      "name": "test2"
+    },
     "code": 894
   },
-  "test3": {
+ {
     "name": "test3",
     "price": 8383,
     "description": "test3",
-    "category": "test3",
+    "category": {
+      "id": 10,
+      "name": "test2"
+    },
     "code": 890
+  },
+  {
+    "name": "test4",
+    "price": 8383,
+    "description": "test4",
+    "category": {
+      "id": 14,
+      "name": "test5"
+    },
+    "code": 978
   }
-}
+]

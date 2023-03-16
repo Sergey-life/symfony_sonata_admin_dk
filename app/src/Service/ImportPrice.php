@@ -78,7 +78,6 @@ class ImportPrice
             }
             if (!$product) {
                 $this->logger->info("Продукту з id: {$price['product_id']} неіснує!");
-                continue;
             }
             $storeProduct = $this->storeProductRepository->findOneBy([
                 'product' => $price['product_id'],

@@ -2,17 +2,18 @@
 
 namespace App\Service;
 
+use App\Entity\Category;
 use App\Entity\CategoryProduct;
 use App\Entity\Product;
 use App\Repository\CategoryProductRepository;
 use App\Repository\ProductRepository;
 
-class ImportProduct
+class ProductImporter
 {
     /**
-     * @var JsonProductProvider
+     * @var ProductProviderInterface
      */
-    private $jsonProductProvider;
+    private $productProvider;
 
     /**
      * @var ProductRepository
@@ -25,17 +26,17 @@ class ImportProduct
     private $categoryProductRepository;
 
     /**
-     * @param JsonProductProvider $jsonProductProvider
+     * @param ProductProviderInterface $productProvider
      * @param ProductRepository $productRepository
      * @param CategoryProductRepository $categoryProductRepository
      */
     public function __construct(
-        JsonProductProvider $jsonProductProvider,
+        ProductProviderInterface $productProvider,
         ProductRepository $productRepository,
         CategoryProductRepository $categoryProductRepository
     )
     {
-        $this->jsonProductProvider = $jsonProductProvider;
+        $this->productProvider = $productProvider;
         $this->productRepository = $productRepository;
         $this->categoryProductRepository = $categoryProductRepository;
     }
@@ -45,21 +46,12 @@ class ImportProduct
      */
     public function updateProdsAndCats()
     {
-        foreach ($this->jsonProductProvider->getProducts() as $item) {
-            $category = $this->categoryProductRepository->findOneBy(['name' => $item['category']]);
+        foreach ($this->productProvider->getProducts() as $item) {
+//            $category = $this->categoryProductRepository->findOneBy(['name' => $item['category']]);
             $product = $this->productRepository->findOneBy(['code' => $item['code']]);
-
-            if (!$category) {
-                $category = new CategoryProduct();
-                $category->setName($item['category']);
-                $this->categoryProductRepository->save($category, true);
-            }
+            $category = $this->processCategory($item['category']);
             if (!$product) {
                 $product = new Product();
-            }
-            else
-            {
-                $product = $this->productRepository->findOneBy(['code' => $item['code']]);
             }
             $product
                 ->setName($item['name'])
@@ -68,7 +60,22 @@ class ImportProduct
                 ->setCode($item['code'])
                 ->setCategory($category);
 
-            $this->jsonProductProvider->save($product);
+            $this->productRepository->save($product, true);
         }
+    }
+
+    /**
+     * @return CategoryProduct
+     */
+    public function processCategory(array $category): CategoryProduct
+    {
+        $categoryOfProduct = $this->categoryProductRepository->find($category['id']);
+        if (!$categoryOfProduct) {
+            $categoryOfProduct = new CategoryProduct();
+        }
+        $categoryOfProduct->setName($category['name']);
+        $this->categoryProductRepository->save($categoryOfProduct, true);
+
+        return $categoryOfProduct;
     }
 }

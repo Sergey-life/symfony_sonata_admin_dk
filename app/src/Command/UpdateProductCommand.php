@@ -5,7 +5,7 @@ namespace App\Command;
 use App\Entity\Product;
 use App\Repository\CategoryProductRepository;
 use App\Repository\ProductRepository;
-use App\Service\ImportProduct;
+use App\Service\ProductImporter;
 use App\Service\JsonProductProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UpdateProductCommand extends Command
 {
     /**
-     * @var ImportProduct
+     * @var ProductImporter
      */
     private $importProduct;
 
@@ -31,9 +31,9 @@ class UpdateProductCommand extends Command
     protected static $defaultName = 'app:update:product';
 
     /**
-     * @param ImportProduct $importProduct
+     * @param ProductImporter $importProduct
      */
-    public function __construct(ImportProduct $importProduct)
+    public function __construct(ProductImporter $importProduct)
     {
         $this->importProduct = $importProduct;
         parent::__construct();
