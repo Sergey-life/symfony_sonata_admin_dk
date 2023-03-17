@@ -33,50 +33,60 @@
     "name": "Пральна машина Samsung",
     "price": 12999,
     "description": "солоджуйтеся підвищеною енергоефективністю, зниженим рівнем шуму та тривалістю роботи. У технології цифрового інвертора використовують сильні магніти, що збільшують потужність. Але такий пристрій працює тихше й споживає менше енергії, ніж універсальний електродвигун. На нього також надають 10-річну гарантію.",
+    "code": 898,
     "category": {
       "id": 4,
       "name": "Побутова техніка"
-    },
-    "code": 898
+    }
   },
   {
     "name": "test",
     "price": 83887,
     "description": "test",
+    "code": 895,
     "category": {
       "id": 10,
       "name": "test2"
-    },
-    "code": 895
+    }
   },
   {
     "name": "test2",
     "price": 83887,
     "description": "test2",
+    "code": 894,
     "category": {
       "id": 10,
       "name": "test2"
-    },
-    "code": 894
+    }
   },
  {
     "name": "test3",
     "price": 8383,
     "description": "test3",
-    "category": {
-      "id": 10,
-      "name": "test2"
-    },
-    "code": 890
-  },
+    "code": 890,
+   "category": {
+     "id": 10,
+     "name": "test2"
+   }
+ },
   {
     "name": "test4",
     "price": 8383,
     "description": "test4",
+    "code": 978,
     "category": {
-      "id": 14,
-      "name": "test5"
-    },
-    "code": 978
+      "id": 24,
+      "name": "testCategory18"
+    }
+  },
+  {
+    "name": "ProductTest5",
+    "price": 8383,
+    "description": "testDescription5",
+    "code": 977,
+    "category": {
+      "id": 23,
+      "name": "testCategory17"
+    }
   }
 ]

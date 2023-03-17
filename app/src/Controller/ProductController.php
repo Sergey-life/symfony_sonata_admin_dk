@@ -28,9 +28,9 @@ class ProductController extends AbstractController
      * @return Response
      */
     #[Route('/update-prods-and-cats', name: 'update.prods.and.cats')]
-    public function updateProdsAndCats(ProductImporter $productImporter): Response
+    public function importProductsAndCategories(ProductImporter $productImporter): Response
     {
-        $productImporter->updateProdsAndCats();
+        $productImporter->importProductsAndCategories();
         $this->addFlash('success', 'Товари та категорії успішно оновлено!');
 
         return $this->render('product/update_prods_and_cats.html.twig');

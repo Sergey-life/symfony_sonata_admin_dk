@@ -2,11 +2,11 @@
 
 namespace App\Service;
 
-use App\Entity\Category;
 use App\Entity\CategoryProduct;
 use App\Entity\Product;
 use App\Repository\CategoryProductRepository;
 use App\Repository\ProductRepository;
+use Psr\Log\LoggerInterface;
 
 class ProductImporter
 {
@@ -26,30 +26,43 @@ class ProductImporter
     private $categoryProductRepository;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * @param ProductProviderInterface $productProvider
      * @param ProductRepository $productRepository
      * @param CategoryProductRepository $categoryProductRepository
+     * @param LoggerInterface $logger
      */
     public function __construct(
         ProductProviderInterface $productProvider,
         ProductRepository $productRepository,
-        CategoryProductRepository $categoryProductRepository
+        CategoryProductRepository $categoryProductRepository,
+        LoggerInterface $logger
     )
     {
         $this->productProvider = $productProvider;
         $this->productRepository = $productRepository;
         $this->categoryProductRepository = $categoryProductRepository;
+        $this->logger = $logger;
     }
 
     /**
      * Update categories and products
      */
-    public function updateProdsAndCats()
+    public function importProductsAndCategories()
     {
         foreach ($this->productProvider->getProducts() as $item) {
-//            $category = $this->categoryProductRepository->findOneBy(['name' => $item['category']]);
             $product = $this->productRepository->findOneBy(['code' => $item['code']]);
-            $category = $this->processCategory($item['category']);
+            if ($product) {
+                $category = $this->processCategory($item['category'], $product->getCategory());
+            }
+            else
+            {
+                $category = $this->processCategory($item['category']);
+            }
             if (!$product) {
                 $product = new Product();
             }
@@ -65,15 +78,48 @@ class ProductImporter
     }
 
     /**
+     * @param array $data
+     * @param CategoryProduct|null $category
      * @return CategoryProduct
      */
-    public function processCategory(array $category): CategoryProduct
+    private function processCategory(array $data, CategoryProduct $category = null): CategoryProduct
     {
-        $categoryOfProduct = $this->categoryProductRepository->find($category['id']);
-        if (!$categoryOfProduct) {
-            $categoryOfProduct = new CategoryProduct();
+        if ($category && $category->getId() == $data['id']) {
+            $categoryOfProduct = $category;
+            $categoryOfProduct->setName($data['name']);
+            $this->categoryProductRepository->save($categoryOfProduct, true);
+
+            return $categoryOfProduct;
         }
-        $categoryOfProduct->setName($category['name']);
+        if ($category && $category->getId() != $data['id']) {
+            $categoryOfProduct = $this->categoryProductRepository->findOneBy(['id' => $data['id']]);
+            if (!$categoryOfProduct) {
+                $categoryOfProduct = $this->createNewCategory($data['name']);
+            }
+        }
+        else
+        {
+            $categoryOfProduct = $this->createNewCategory($data['name']);
+        }
+
+        return $categoryOfProduct;
+    }
+
+    /**
+     * Return new category or write error in log
+     * @param string
+     * @return CategoryProduct
+     */
+    private function createNewCategory(string $categoryName): CategoryProduct
+    {
+        if ($this->categoryProductRepository->findOneBy(['name' => $categoryName])) {
+            $this->logger->error("Категорія з {name} вже існує!", [
+                'name' => $categoryName
+            ]);
+            exit();
+        }
+        $categoryOfProduct = new CategoryProduct();
+        $categoryOfProduct->setName($categoryName);
         $this->categoryProductRepository->save($categoryOfProduct, true);
 
         return $categoryOfProduct;

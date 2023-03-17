@@ -32,7 +32,8 @@
         "symfony/templating": "5.4.*",
         "symfony/translation": "5.4.*",
         "symfony/validator": "5.4.*",
-        "symfony/yaml": "5.4.*"
+        "symfony/yaml": "5.4.*",
+      "ext-mysql_xdevapi": "*"
     },
     "config": {
         "allow-plugins": {
