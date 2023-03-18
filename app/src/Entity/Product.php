@@ -57,11 +57,29 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: StoreProduct::class, cascade: ["persist", "remove"], orphanRemoval: true)]
     private Collection $stores;
 
-    public function __construct()
+    /**
+     * @param CategoryProduct $category
+     * @param string $description
+     * @param float $price
+     * @param int $code
+     * @param string $name
+     */
+    public function __construct(
+        string $name,
+        string $description,
+        float $price,
+        int $code,
+        CategoryProduct $category
+    )
     {
         $this->basketItems = new ArrayCollection();
         $this->orders = new ArrayCollection();
         $this->stores = new ArrayCollection();
+        $this->name = $name;
+        $this->description = $description;
+        $this->price = $price;
+        $this->code = $code;
+        $this->category = $category;
     }
 
     public function getId(): ?int

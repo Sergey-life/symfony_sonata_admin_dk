@@ -22,9 +22,13 @@ class CategoryProduct
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private Collection $products;
 
-    public function __construct()
+    /**
+     * @param string $name
+     */
+    public function __construct(string $name)
     {
         $this->products = new ArrayCollection();
+        $this->name = $name;
     }
 
     public function getId(): ?int

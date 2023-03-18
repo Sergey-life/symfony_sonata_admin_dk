@@ -63,15 +63,23 @@ class ProductImporter
             {
                 $category = $this->processCategory($item['category']);
             }
-            if (!$product) {
-                $product = new Product();
+            if ($product) {
+                $product
+                    ->setName($item['name'])
+                    ->setDescription($item['description'])
+                    ->setPrice($item['price'])
+                    ->setCode($item['code'])
+                    ->setCategory($category);
             }
-            $product
-                ->setName($item['name'])
-                ->setDescription($item['description'])
-                ->setPrice($item['price'])
-                ->setCode($item['code'])
-                ->setCategory($category);
+            if (!$product) {
+                $product = new Product(
+                    $item['name'],
+                    $item['description'],
+                    $item['price'],
+                    $item['code'],
+                    $category
+                );
+            }
 
             $this->productRepository->save($product, true);
         }
@@ -118,8 +126,7 @@ class ProductImporter
             ]);
             exit();
         }
-        $categoryOfProduct = new CategoryProduct();
-        $categoryOfProduct->setName($categoryName);
+        $categoryOfProduct = new CategoryProduct($categoryName);
         $this->categoryProductRepository->save($categoryOfProduct, true);
 
         return $categoryOfProduct;
