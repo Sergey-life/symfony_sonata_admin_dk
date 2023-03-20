@@ -9,12 +9,12 @@ use App\Repository\StoreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
-class ImportPrice
+class PriceImporter
 {
     /**
-     * @var JsonPriceProvider
+     * @var PriceProviderInterface
      */
-    private $jsonPriceProvider;
+    private $priceProvider;
 
     /**
      * @var ProductRepository
@@ -42,7 +42,7 @@ class ImportPrice
     private $logger;
 
     /**
-     * @param JsonPriceProvider $jsonPriceProvider
+     * @param PriceProviderInterface $priceProvider
      * @param ProductRepository $productRepository
      * @param StoreRepository $storeRepository
      * @param StoreProductRepository $storeProductRepository
@@ -50,7 +50,7 @@ class ImportPrice
      * @param LoggerInterface $logger
      */
     public function __construct(
-        JsonPriceProvider $jsonPriceProvider,
+        PriceProviderInterface $priceProvider,
         ProductRepository $productRepository,
         StoreRepository $storeRepository,
         StoreProductRepository $storeProductRepository,
@@ -58,7 +58,7 @@ class ImportPrice
         LoggerInterface $logger
     )
     {
-        $this->jsonPriceProvider = $jsonPriceProvider;
+        $this->priceProvider = $priceProvider;
         $this->productRepository = $productRepository;
         $this->storeRepository = $storeRepository;
         $this->storeProductRepository = $storeProductRepository;
@@ -66,9 +66,9 @@ class ImportPrice
         $this->logger = $logger;
     }
 
-    public function updatePrice()
+    public function updatePrices()
     {
-        foreach ($this->jsonPriceProvider->getPrices() as $price) {
+        foreach ($this->priceProvider->getPrices() as $price) {
             $store = $this->storeRepository->findOneBy(['id' => $price['store_id']]);
             $product = $this->productRepository->findOneBy(['id' => $price['product_id']]);
 

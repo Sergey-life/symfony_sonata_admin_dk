@@ -48,6 +48,14 @@ services:
         tags:
             - { name: sonata.admin, model_class: App\Entity\FAQ\FAQQuestion, manager_type: orm ,group: 'FAQ', label: FAQQuestion }
 
+    #Product and Category
+    App\Service\ProductProviderInterface:
+        class: App\Service\JsonProductProvider
+
+    #Price
+    App\Service\PriceProviderInterface:
+        class: App\Service\JsonPriceProvider
+
     App\:
         resource: '../src/'
         exclude:

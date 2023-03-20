@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ProductRepository;
-use App\Service\ImportPrice;
+use App\Service\PriceImporter;
 use App\Service\ProductImporter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,9 +37,9 @@ class ProductController extends AbstractController
     }
 
     #[Route('/update-prod-price', name: 'update.prod.price')]
-    public function updatePrice(ImportPrice $importPrice): Response
+    public function updatePrices(PriceImporter $priceImporter): Response
     {
-        $importPrice->updatePrice();
+        $priceImporter->updatePrices();
         $this->addFlash('success', 'Ціну на товари успішно оновленно');
 
         return $this->render('product/update_price.html.twig');
