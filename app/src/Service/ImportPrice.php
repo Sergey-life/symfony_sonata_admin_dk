@@ -84,11 +84,7 @@ class ImportPrice
                 'store' => $price['store_id']
             ]);
             if (!$storeProduct) {
-                $storeProduct = new StoreProduct();
-                $storeProduct
-                    ->setStore($store)
-                    ->setProduct($product)
-                    ->setPrice($price['price']);
+                $storeProduct = new StoreProduct($store, $product, $price['price']);
             }
             else
             {

@@ -26,8 +26,20 @@ class StoreProduct
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    public function __construct()
+    /**
+     * @param Store $store
+     * @param Product $product
+     * @param float $price
+     */
+    public function __construct(
+        Store $store,
+        Product $product,
+        float $price
+    )
     {
+        $this->store = $store;
+        $this->product = $product;
+        $this->price = $price;
     }
 
     public function getId(): ?int
