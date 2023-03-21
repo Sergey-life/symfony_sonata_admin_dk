@@ -18,7 +18,7 @@ class StoreProduct
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'products', targetEntity: Store::class)]
+    #[ORM\ManyToOne(inversedBy: 'products', targetEntity: Store::class, fetch: "EAGER")]
     #[ORM\JoinColumn(nullable: false)]
     private ?Store $store = null;
 

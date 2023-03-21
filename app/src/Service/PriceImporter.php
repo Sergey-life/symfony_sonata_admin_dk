@@ -96,13 +96,12 @@ class PriceImporter
     }
 
     /**
-     * @param StoreProduct
+     * Return array products or store
      */
-    public function save(StoreProduct $storeProduct): void
+    public function init(): array
     {
-        // Persist in database
-        $this->entityManager->persist($storeProduct);
-        $this->entityManager->flush();
-
+        /**
+         * @todo Повернути масив продуктів та магазинів з ключами id
+         */
     }
 }
